@@ -5,5 +5,6 @@ python src/hifi_gan/train.py \
     --input_training_file '' \
     --input_validation_file '' \
     --checkpoint_path '' \
+    --logs_path '' \
     --checkpoint_interval 10000 \
     --stdout_interval 50
