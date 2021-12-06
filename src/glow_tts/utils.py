@@ -145,8 +145,12 @@ def get_hparams(init=True):
   parser = argparse.ArgumentParser()
   parser.add_argument('-c', '--config', type=str, required=True,
                       help='JSON file for configuration')
-  parser.add_argument('-m', '--model', type=str, required=True,
+  parser.add_argument('-m', '--model', type=str,
                       help='Model name')
+  parser.add_argument('-l', '--logs', type=str,
+                      help='logs name')
+  parser.add_argument('-s', '--mels', type=str,
+                      help='logs name')
   
   args = parser.parse_args()
   # model_dir = os.path.join("./logs", args.model)
@@ -168,6 +172,8 @@ def get_hparams(init=True):
   
   hparams = HParams(**config)
   hparams.model_dir = model_dir
+  hparams.log_dir = args.logs
+  hparams.mels_dir = args.mels
   return hparams
 
 

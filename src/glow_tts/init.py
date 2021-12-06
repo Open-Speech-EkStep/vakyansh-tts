@@ -25,9 +25,9 @@ class FlowGenerator_DDI(models.FlowGenerator):
 
 def main():
   hps = utils.get_hparams()
-  logger = utils.get_logger(hps.model_dir)
+  logger = utils.get_logger(hps.log_dir)
   logger.info(hps)
-  utils.check_git_hash(hps.model_dir)
+  utils.check_git_hash(hps.log_dir)
 
   torch.manual_seed(hps.train.seed)
 

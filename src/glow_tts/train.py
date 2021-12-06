@@ -37,11 +37,11 @@ def main():
 def train_and_eval(rank, n_gpus, hps):
   global global_step
   if rank == 0:
-    logger = utils.get_logger(hps.model_dir)
+    logger = utils.get_logger(hps.log_dir)
     logger.info(hps)
-    utils.check_git_hash(hps.model_dir)
-    writer = SummaryWriter(log_dir=hps.model_dir)
-    writer_eval = SummaryWriter(log_dir=os.path.join(hps.model_dir, "eval"))
+    utils.check_git_hash(hps.log_dir)
+    writer = SummaryWriter(log_dir=hps.log_dir)
+    writer_eval = SummaryWriter(log_dir=os.path.join(hps.log_dir, "eval"))
 
   dist.init_process_group(backend='nccl', init_method='env://', world_size=n_gpus, rank=rank)
   torch.manual_seed(hps.train.seed)
