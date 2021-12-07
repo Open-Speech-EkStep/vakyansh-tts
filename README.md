@@ -25,7 +25,7 @@ cd ../vakyansh-tts
 ```
 Build Monotonic Alignment Search Code (Cython)
 ```
-cd ./monotonic_align
+cd ./src/glow-tts/monotonic_align
 python setup.py build_ext --inplace
 cd ..
 ```
