@@ -143,9 +143,11 @@ def load_filepaths_and_text(filename, split="|"):
 
 def get_hparams(init=True):
   parser = argparse.ArgumentParser()
-  parser.add_argument('-c', '--config', type=str, required=True,
+  parser.add_argument('-c', '--config', type=str,
                       help='JSON file for configuration')
   parser.add_argument('-m', '--model', type=str,
+                      help='Model name')
+  parser.add_argument('-g', '--gan', type=str,
                       help='Model name')
   parser.add_argument('-l', '--logs', type=str,
                       help='logs name')
@@ -160,6 +162,9 @@ def get_hparams(init=True):
 
   config_path = args.config
   config_save_path = os.path.join(model_dir, "config.json")
+
+  if not config_path : config_path = config_save_path
+  
   if init:
     with open(config_path, "r") as f:
       data = f.read()
@@ -174,6 +179,7 @@ def get_hparams(init=True):
   hparams.model_dir = model_dir
   hparams.log_dir = args.logs
   hparams.mels_dir = args.mels
+  hparams.gan_dir = args.gan
   return hparams
 
 
