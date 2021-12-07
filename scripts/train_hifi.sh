@@ -1,4 +1,4 @@
-python src/hifi_gan/train.py \
+python ../src/hifi_gan/train.py \
     --config '' \
     --input_wavs_dir '' \
     --input_mels_dir '' \
