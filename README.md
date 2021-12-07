@@ -12,7 +12,7 @@ Build conda virtual environment
 cd ./vakyansh-tts
 conda create --name <env_name> python=3.7
 conda activate <env_name>
-pip install -r requirements.txt
+pip install -r requirement.txt
 ```
 Install [apex](https://github.com/NVIDIA/apex); commit: 37cdaf4 for Mixed-precision training
 ```
