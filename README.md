@@ -29,3 +29,22 @@ cd ./src/glow-tts/monotonic_align
 python setup.py build_ext --inplace
 cd ../../../
 ```
+
+## 2. Spectogram Training (glow-tts)
+
+```
+cd ./scripts
+bash train_glow.sh
+```
+## 3. Genrate Mels
+
+```
+cd ./scripts
+bash generate_mels.sh
+```
+## 4. Vocoder Training (hifi-gan)
+
+```
+cd ./scripts
+bash train_hifi.sh
+```
