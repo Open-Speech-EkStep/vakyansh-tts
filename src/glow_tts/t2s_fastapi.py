@@ -1,32 +1,52 @@
+from starlette.responses import StreamingResponse
 from texttospeech import TextToSpeech
 from typing import Optional
-import wavio
-from io import BytesIO
-from fastapi import FastAPI, Response, HTTPException
+from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
 import uvicorn
-
+import base64
 app = FastAPI()
 
-def get_audio(data, sr):
-    audio = BytesIO()
-    wavio.write(audio, data, sr, sampwidth=2)
-    audio.seek(0)
-    return audio.read()
+class TextJson(BaseModel) :
+    text: str
+    lang: Optional[str]='hi'
+    gender: Optional[str]='male'
 
-@app.get("/predict/")
-async def inference(text: str, noise: Optional[float]=0.667, length: Optional[float]=1.0):
-    if text:
-        data, sr = t2s.generate_audio(text, noise_scale=noise, length_scale=length)
-        audio = get_audio(data, sr)
-    else:
-        raise HTTPException(status_code=400, detail="Bad Request")
-
-    return Response(audio, media_type="audio/wav")
-
-t2s = TextToSpeech(
+t2s_ml_male = TextToSpeech(
             glow_model_dir='',
             hifi_model_dir='',
             device='')
+
+available_choice = {'ml_male': t2s_ml_male}
+
+    
+@app.post("/tts/")
+async def tts(input: TextJson):
+    text = input.text
+    lang = input.lang
+    gender = input.gender
+
+    choice = lang+'_'+gender
+    if choice in available_choice.keys() :
+        t2s = available_choice[choice]
+    else :
+        raise HTTPException(status_code=400, detail={"error":"Requested model not found"})
+
+    if text:
+        data, sr = t2s.generate_audio(text)
+        t2s.save_audio('out.wav', data, sr)
+    else:
+        raise HTTPException(status_code=400, detail={"error":"No text"})
+
+    # to return outpur as a file
+    # audio = open('out.wav', mode='rb')
+    # return StreamingResponse(audio, media_type="audio/wav")
+
+    with open('out.wav', 'rb') as audio_file:
+        encoded_bytes = base64.b64encode(audio_file.read())
+        encoded_string = encoded_bytes.decode()
+    return {'encoding': 'base64','data' : encoded_string, 'sr' : sr}
+
 
 if __name__ == '__main__':
     uvicorn.run(

@@ -106,7 +106,7 @@ class TextToSpeech:
         
         return audio, self.h.sampling_rate
 
-    def save_audio(self, audio, sr, out_wav_path):
+    def save_audio(self, out_wav_path, audio, sr):
         write(out_wav_path, sr, audio)
         
         
@@ -126,6 +126,6 @@ if __name__ == '__main__':
         device=args.device)
 
     audio, sr = t2s.generate_audio(args.wav)
-    t2s.save_audio(args.save_audio, audio, sr)
+    t2s.save_audio(args.wav, audio, sr)
 
     pass
