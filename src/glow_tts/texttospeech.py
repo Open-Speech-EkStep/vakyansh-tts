@@ -9,12 +9,12 @@ import os
 import json
 
 import torch
-from text import text_to_sequence
-from text.symbols import symbols
+from processtext import text_to_sequence
 import commons
 import models
 import utils
 import sys
+from argparse import ArgumentParser
 
 class TextToSpeech:
         
@@ -35,6 +35,7 @@ class TextToSpeech:
     def load_glow_tts(self):
         hps = utils.get_hparams_from_dir(self.glow_model_dir)
         checkpoint_path = utils.latest_checkpoint_path(self.glow_model_dir)
+        symbols = list(hps.data.chars) + list(hps.data.punc)
         
         glow_tts_model = models.FlowGenerator(
             len(symbols) + getattr(hps.data, "add_blank", False),
@@ -71,14 +72,16 @@ class TextToSpeech:
         
         return h, generator
     
-    def generate_audio(self, text, out_wav_path, noise_scale=0.667, length_scale=1.0):
-        
+    def generate_audio(self, text, noise_scale=0.667, length_scale=1.0):
+
+        symbols = list(self.hps.data.chars) + list(self.hps.data.punc)
+        cleaner = self.hps.data.text_cleaners
         if getattr(self.hps.data, "add_blank", False):
-            text_norm = text_to_sequence(text, cleaner)
+            text_norm = text_to_sequence(symbols, text, cleaner)
             text_norm = commons.intersperse(text_norm, len(symbols))
         else: # If not using "add_blank" option during training, adding spaces at the beginning and the end of utterance improves quality
             text = " " + text.strip() + " "
-            text_norm = text_to_sequence(text, cleaner)
+            text_norm = text_to_sequence(symbols, text, cleaner)
 
         sequence = np.array(text_norm)[None, :]
 
@@ -101,18 +104,28 @@ class TextToSpeech:
         audio = audio * 32768.0
         audio = audio.cpu().detach().numpy().astype('int16') 
         
-        #return audio, self.h.sampling_rate
-        write(out_wav_path, self.h.sampling_rate, audio)
+        return audio, self.h.sampling_rate
+
+    def save_audio(self, audio, sr, out_wav_path):
+        write(out_wav_path, sr, audio)
         
         
 
 if __name__ == '__main__':
-    hps = utils.get_hparams()
-    glow = hps.model_dir # path to model dir
-    hifi = hps.gan_dir # path to save generated mels
-    cleaner = hps.data.text_cleaners
+
+    parser = ArgumentParser()
+    parser.add_argument('-m', '--model', required=True, type=str)
+    parser.add_argument('-g', '--gan', required=True, type=str)
+    parser.add_argument('-d', '--device', type=str, default='cpu')
+    parser.add_argument('-w', '--wav', type=str)
+    args=parser.parse_args()
+    
     t2s = TextToSpeech(
-        glow_model_dir=glow,
-        hifi_model_dir=hifi,
-        device='cpu')
+        glow_model_dir=args.model,
+        hifi_model_dir=args.gan,
+        device=args.device)
+
+    audio, sr = t2s.generate_audio(args.wav)
+    t2s.save_audio(args.save_audio, audio, sr)
+
     pass
