@@ -48,3 +48,8 @@ bash generate_mels.sh
 cd ./scripts
 bash train_hifi.sh
 ```
+## 4. Inference
+```
+cd ./scripts
+bash infer.sh
+```
