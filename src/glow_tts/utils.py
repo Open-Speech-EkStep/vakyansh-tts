@@ -147,12 +147,12 @@ def get_hparams(init=True):
                       help='JSON file for configuration')
   parser.add_argument('-m', '--model', type=str,
                       help='Model name')
-  parser.add_argument('-g', '--gan', type=str,
-                      help='Model name')
+  # parser.add_argument('-g', '--gan', type=str,
+  #                     help='Model name')
   parser.add_argument('-l', '--logs', type=str,
                       help='logs name')
-  parser.add_argument('-s', '--mels', type=str,
-                      help='logs name')
+  # parser.add_argument('-s', '--mels', type=str,
+  #                     help='logs name')
   
   args = parser.parse_args()
   # model_dir = os.path.join("./logs", args.model)
@@ -163,7 +163,7 @@ def get_hparams(init=True):
   config_path = args.config
   config_save_path = os.path.join(model_dir, "config.json")
 
-  if not config_path : config_path = config_save_path
+  # if not config_path : config_path = config_save_path
   
   if init:
     with open(config_path, "r") as f:
@@ -178,9 +178,10 @@ def get_hparams(init=True):
   hparams = HParams(**config)
   hparams.model_dir = model_dir
   hparams.log_dir = args.logs
-  hparams.mels_dir = args.mels
-  hparams.gan_dir = args.gan
+  # hparams.mels_dir = args.mels
+  # hparams.gan_dir = args.gan
   return hparams
+
 
 
 def get_hparams_from_dir(model_dir):
