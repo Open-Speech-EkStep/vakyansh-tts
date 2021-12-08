@@ -1,7 +1,7 @@
 # vakyansh-tts
 Text to Speech for Indic languages
 
-# 1. Installation and SetUp
+### 1. Installation and SetUp
 
 Clone repo
 ```
@@ -30,25 +30,25 @@ python setup.py build_ext --inplace
 cd ../../../
 ```
 
-# 2. Spectogram Training (glow-tts)
+### 2. Spectogram Training (glow-tts)
 
 ```
 cd ./scripts
 bash train_glow.sh
 ```
-# 3. Genrate Mels
+### 3. Genrate Mels
 
 ```
 cd ./scripts
 bash generate_mels.sh
 ```
-# 4. Vocoder Training (hifi-gan)
+### 4. Vocoder Training (hifi-gan)
 
 ```
 cd ./scripts
 bash train_hifi.sh
 ```
-# 4. Inference
+### 4. Inference
 ```
 cd ./scripts
 bash infer.sh
