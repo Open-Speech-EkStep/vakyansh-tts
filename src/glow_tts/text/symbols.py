@@ -8,14 +8,14 @@ import utils
 import os
 hps = utils.get_hparams()
 
-with open(os.path.abspath(hps.data.chars_file), encoding='utf-8') as file:
-    chars = file.read()
+# with open(os.path.abspath(hps.data.chars_file), encoding='utf-8') as file:
+#     chars = file.read()
 
-with open(os.path.abspath(hps.data.punc_file), encoding='utf-8') as file:
-    punc = file.read()
+# with open(os.path.abspath(hps.data.punc_file), encoding='utf-8') as file:
+#     punc = file.read()
 
-_punctuation = punc
-_letters = chars
+_punctuation = hps.data.punc
+_letters = hps.data.chars
 
 # export all characters as list
 

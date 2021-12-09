@@ -75,9 +75,9 @@ def save_txts_from_txt_done_data(text_path, wav_path_for_annotations_txt, out_pa
 
 
 if __name__ == '__main__':
-    text_path = '/home/neerajchhimwal/TTS/telugu/iitm/female_mono/txt.done.data'
-    out_path_for_txts = '/home/neerajchhimwal/TTS/vakyansh-tts/data/telugu_female/'
-    wav_path_for_annotations_txt = '/home/neerajchhimwal/TTS/vakyansh-tts/data/telugu_female/wav_16K'
+    text_path = 'path/to/txt.done.data'
+    out_path_for_txts = 'vakyansh-tts/data/training/'
+    wav_path_for_annotations_txt = 'vakyansh-tts/data/training/wav_16K'
     num_samples_valid = 400
     num_samples_test = 50
     save_txts_from_txt_done_data(text_path, wav_path_for_annotations_txt, out_path_for_txts,
