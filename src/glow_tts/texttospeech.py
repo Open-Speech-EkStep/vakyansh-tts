@@ -35,7 +35,7 @@ class TextToSpeech:
     def load_glow_tts(self):
         hps = utils.get_hparams_from_dir(self.glow_model_dir)
         checkpoint_path = utils.latest_checkpoint_path(self.glow_model_dir)
-        symbols = list(hps.data.chars) + list(hps.data.punc)
+        symbols = list(hps.data.punc) + list(hps.data.chars)
         
         glow_tts_model = models.FlowGenerator(
             len(symbols) + getattr(hps.data, "add_blank", False),
