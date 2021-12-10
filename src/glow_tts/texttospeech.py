@@ -74,7 +74,7 @@ class TextToSpeech:
     
     def generate_audio(self, text, noise_scale=0.667, length_scale=1.0):
 
-        symbols = list(self.hps.data.chars) + list(self.hps.data.punc)
+        symbols = list(self.hps.data.punc) + list(self.hps.data.chars)
         cleaner = self.hps.data.text_cleaners
         if getattr(self.hps.data, "add_blank", False):
             text_norm = text_to_sequence(symbols, text, cleaner)
