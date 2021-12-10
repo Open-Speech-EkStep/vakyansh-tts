@@ -21,7 +21,7 @@ if __name__ == '__main__' :
             os.makedirs(SAVE_MELS_DIR)
 
     hps = utils.get_hparams_from_dir(MODEL_DIR)
-    symbols = list(hps.data.chars) + list(hps.data.punc)
+    symbols = list(hps.data.punc) + list(hps.data.chars)
     checkpoint_path = utils.latest_checkpoint_path(MODEL_DIR)
     cleaner = hps.data.text_cleaners
 
