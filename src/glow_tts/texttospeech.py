@@ -117,7 +117,8 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--model', required=True, type=str)
     parser.add_argument('-g', '--gan', required=True, type=str)
     parser.add_argument('-d', '--device', type=str, default='cpu')
-    parser.add_argument('-w', '--wav', type=str)
+    parser.add_argument('-t', '--text', type=str, required=True)
+    parser.add_argument('-w', '--wav', type=str, required=True)
     args=parser.parse_args()
     
     t2s = TextToSpeech(
@@ -125,7 +126,7 @@ if __name__ == '__main__':
         hifi_model_dir=args.gan,
         device=args.device)
 
-    audio, sr = t2s.generate_audio(args.wav)
+    audio, sr = t2s.generate_audio(args.text)
     t2s.save_audio(args.wav, audio, sr)
 
     pass
