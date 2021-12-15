@@ -1,0 +1,1 @@
+abspath/to/wav/file|corresponding-text
