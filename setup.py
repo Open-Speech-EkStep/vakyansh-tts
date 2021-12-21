@@ -14,7 +14,7 @@ setup(
     #package_dir={'': 'src'},
     #packages=find_packages(where='src'),
     packages=['tts_infer'],
-    python_requires='>=3.6, <4',
+    python_requires='>=3.7, <4',
     install_requires=[
         'Cython==0.29.24',
         'inflect==5.3.0',
