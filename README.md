@@ -25,10 +25,29 @@ cd ../vakyansh-tts
 ```
 Build Monotonic Alignment Search Code (Cython)
 ```
-cd src/glow_tts/monotonic_align/
-python setup.py build_ext --inplace
-cd ../../../
+bash install.sh
 ```
+#### 1.1 Installation of tts_infer library
+```
+git clone https://github.com/Open-Speech-EkStep/vakyansh-tts
+cd vakyansh-tts
+bash install.sh
+python setup.py bdist_wheel
+pip install -e .
+```
+
+Usage:
+```
+from tts_infer.tts import TextToMel, MelToWav
+text_to_mel = TextToMel(glow_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
+mel_to_wav = MelToWav(hifi_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
+
+def run_tts(text):
+    mel = text_to_mel.generate_mel(text)
+    audio, sr = mel_to_wav.generate_wav(mel)
+    return (sr, audio)
+```
+
 
 ### 2. Spectogram Training (glow-tts)
 
