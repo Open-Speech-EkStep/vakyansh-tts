@@ -16,7 +16,7 @@ def write_txt(content, filename):
 
 def save_train_test_valid_split(annotations_txt, num_samples_valid, num_samples_test):
     with open(annotations_txt, encoding='utf-8') as f:
-        all_lines = [line.strip() for line in f.read().splitlines()]
+        all_lines = [line.strip() for line in f.readlines()]
     test_val_indices = random.sample(range(len(all_lines)), num_samples_valid + num_samples_test)
     valid_ix = test_val_indices[:num_samples_valid]
     test_ix = test_val_indices[num_samples_valid:]
