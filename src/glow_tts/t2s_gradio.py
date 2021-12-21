@@ -1,11 +1,12 @@
 import gradio as gr
 from texttospeech import TextToSpeech
 
+text_to_mel = TextToMel(glow_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
+mel_to_wav = MelToWav(hifi_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
 
-t2s = TextToSpeech(glow_model_dir='/path/to/glow-tts/checkpoint/dir', 
-                    hifi_model_dir='/path/to/glow-tts/checkpoint/dir')
 def run_tts(text):
-    audio, sr = t2s.generate_audio(text)
+    mel = text_to_mel.generate_mel(text)
+    audio, sr = mel_to_wav.generate_wav(mel)
     return (sr, audio)
 
 # text = " सीआईएसएफ में उप-निरीक्षक महावीर प्रसाद गोदरा को मरणोपरांत 'शौर्य चक्र' से सम्मानित किया गया। "
