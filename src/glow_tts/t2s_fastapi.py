@@ -1,5 +1,5 @@
 from starlette.responses import StreamingResponse
-from texttospeech import TextToSpeech
+from texttospeech import MelToWav, TextToMel, TextToSpeech
 from typing import Optional
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
@@ -12,15 +12,15 @@ class TextJson(BaseModel) :
     lang: Optional[str]='hi'
     gender: Optional[str]='male'
 
-t2s_ml_male = TextToSpeech(
-            glow_model_dir='',
-            hifi_model_dir='',
-            device='')
+glow_hi_male = TextToMel(glow_model_dir='', device='')
+glow_hi_female = TextToMel(glow_model_dir='', device='')
+hifi_hi = MelToWav(hifi_model_dir='', device='')
 
-available_choice = {'ml_male': t2s_ml_male}
+
+available_choice = {'hi_male': [glow_hi_male, hifi_hi], 'hi_female': [glow_hi_female, hifi_hi]}
 
     
-@app.post("/tts/")
+@app.post("/TTS/")
 async def tts(input: TextJson):
     text = input.text
     lang = input.lang
@@ -33,12 +33,13 @@ async def tts(input: TextJson):
         raise HTTPException(status_code=400, detail={"error":"Requested model not found"})
 
     if text:
-        data, sr = t2s.generate_audio(text)
+        mel = t2s[0].generate_mel(text)
+        data, sr = t2s[1].generate_wav(mel)
         t2s.save_audio('out.wav', data, sr)
     else:
         raise HTTPException(status_code=400, detail={"error":"No text"})
 
-    # to return outpur as a file
+    ## to return outpur as a file
     # audio = open('out.wav', mode='rb')
     # return StreamingResponse(audio, media_type="audio/wav")
 
