@@ -1,5 +1,5 @@
 import gradio as gr
-from texttospeech import TextToSpeech
+from texttospeech import TextToMel, MelToWav
 
 text_to_mel = TextToMel(glow_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
 mel_to_wav = MelToWav(hifi_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
