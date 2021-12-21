@@ -1,5 +1,5 @@
 from starlette.responses import StreamingResponse
-from texttospeech import MelToWav, TextToMel, TextToSpeech
+from texttospeech import MelToWav, TextToMel
 from typing import Optional
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
