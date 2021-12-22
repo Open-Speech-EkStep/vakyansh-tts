@@ -21,8 +21,7 @@ setup(
         'layers==0.1.5',
         'librosa==0.8.1',
         'matplotlib==3.3.4',
-        'numpy==1.20.3',
-        'numba==0.54.1'
+        'numpy==1.19.5',
         'scipy==1.5.4',
         'tensorboardX==2.4',
         'tensorboard==2.7.0',
