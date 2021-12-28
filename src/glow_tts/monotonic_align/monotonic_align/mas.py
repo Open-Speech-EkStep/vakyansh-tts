@@ -1,7 +1,7 @@
 from typing import overload
 import numpy as np
 import torch
-from .monotonic_align.core import maximum_path_c
+from monotonic_align.core import maximum_path_c
 
 
 def mask_from_len(lens: torch.Tensor, max_len=None):
