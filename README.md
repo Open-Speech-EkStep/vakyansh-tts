@@ -64,6 +64,7 @@ def translit(text, lang):
     return updated_sent
     
 def run_tts(text, lang):
+    text = text.replace('।', '.') # only for hindi models
     text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
     text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
     
