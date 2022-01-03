@@ -51,6 +51,7 @@ from tts_infer.transliterate imoprt XlitEngine
 from tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
+from scipy.io.wavfile import write
 
 text_to_mel = TextToMel(glow_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
 mel_to_wav = MelToWav(hifi_model_dir='/path/to/hifi/checkpoint/dir', device='cuda')
@@ -68,6 +69,7 @@ def run_tts(text, lang):
     
     mel = text_to_mel.generate_mel(text_num_to_word_and_transliterated)
     audio, sr = mel_to_wav.generate_wav(mel)
+    write(filename='temp.wav', rate=sr, data=audio) # for saving wav file, if needed
     return (sr, audio)
 ```
 
