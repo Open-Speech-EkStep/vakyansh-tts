@@ -47,7 +47,7 @@ gsutil -m cp -r gs://vakyaansh-open-models/translit_models .
 Usage:
 ```
 from tts_infer.tts import TextToMel, MelToWav
-from tts_infer.transliterate imoprt XlitEngine
+from tts_infer.transliterate import XlitEngine
 from tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
