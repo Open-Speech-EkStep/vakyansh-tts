@@ -31,7 +31,8 @@ setup(
         'fastapi==0.70.0',
         'uvicorn==0.15.0',
         'gradio==2.5.2',
-        'wavio==0.0.4'
+        'wavio==0.0.4',
+        'pydload==1.0.9'
     ],
     classifiers=[
         # How mature is this project? Common values are

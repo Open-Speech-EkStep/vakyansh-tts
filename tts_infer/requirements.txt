@@ -1,0 +1,6 @@
+# will be installed with main setup.py, no need to reinstall
+
+ai4bharat-transliteration==0.5.0.3
+numpy==1.19.5
+pandas
+pydload
