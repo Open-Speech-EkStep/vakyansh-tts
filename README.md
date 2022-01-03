@@ -47,7 +47,7 @@ from tts_infer.num_to_word_on_sent import normalize_nums
 import re
 
 text_to_mel = TextToMel(glow_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
-mel_to_wav = MelToWav(hifi_model_dir='/path/to/glow-tts/checkpoint/dir', device='cuda')
+mel_to_wav = MelToWav(hifi_model_dir='/path/to/hifi/checkpoint/dir', device='cuda')
 
 def translit(text, lang):
     reg = re.compile(r'[a-zA-Z]')
@@ -57,8 +57,8 @@ def translit(text, lang):
     return updated_sent
     
 def run_tts(text, lang):
-    text_num_to_word = normalize_nums(text, lang)
-    text_num_to_word_and_transliterated = translit(text_num_to_word, lang)
+    text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
+    text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
     
     mel = text_to_mel.generate_mel(text_num_to_word_and_transliterated)
     audio, sr = mel_to_wav.generate_wav(mel)
