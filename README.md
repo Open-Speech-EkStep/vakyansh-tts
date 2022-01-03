@@ -59,7 +59,7 @@ mel_to_wav = MelToWav(hifi_model_dir='/path/to/hifi/checkpoint/dir', device='cud
 def translit(text, lang):
     reg = re.compile(r'[a-zA-Z]')
     engine = XlitEngine(lang)
-    words = [engine.translit_word(word, topk=1)[lang][0] if reg.match(word) else word for word in sent.split()]
+    words = [engine.translit_word(word, topk=1)[lang][0] if reg.match(word) else word for word in text.split()]
     updated_sent = ' '.join(words)
     return updated_sent
     
