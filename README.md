@@ -30,6 +30,7 @@ bash install.sh
 ### 1.1 Installation of tts_infer package
 
 In tts_infer package, we currently have two components:
+    
     1. Transliteration (AI4bharat's open sourced models) (Languages supported: {"hi", "gu", "mr", "bn", "te", "ta", "kn", "pa", "gom", "mai", "ml", "sd", "si", "ur"})
     
     2. Num to Word (Languages supported: {'en', 'hi', 'gu', 'mr', 'bn', 'te', 'ta', 'kn', 'or', 'pa'} )
