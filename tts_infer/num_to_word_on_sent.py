@@ -1,26 +1,25 @@
-
 import re
 import string
 
 # ----------------------------- indic_num.py -----------------------------
-supported_lang = {'en', 'hi', 'gu', 'mr', 'bn', 'te', 'ta', 'kn', 'or', 'pa'}
+supported_lang = {"en", "hi", "gu", "mr", "bn", "te", "ta", "kn", "or", "pa"}
 # supported_lang = {'eng', 'hin', 'guj', 'mar', 'ben', 'tel', 'tam', 'kan', 'ori', 'pan'}  # Three alphabet lang code
 
 all_num = {
-    'en': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-    'hi': ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'],
-    'gu': ['૦', '૧', '૨', '૩', '૪', '૫', '૬', '૭', '૮', '૯'],
-    'mr': ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'],
-    'bn': ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'],
-    'te': ['౦', '౧', '౨', '౩', '౪', '౫', '౬', '౭', '౮', '౯'],
-    'ta': ['0', '௧', '௨', '௩', '௪', '௫', '௬', '௭', '௮', '௯', '௰'],
-    'kn': ['೦', '೧', '೨', '೩', '೪', '೫', '೬', '೭', '೮', '೯'],
-    'or': ['୦', '୧', '୨', '୩', '୪', '୫', '୬', '୭', '୮', '୯'],
-    'pa': ['੦', '੧', '੨', '੩', '੪', '੫', '੬', '੭', '੮', '੯']
+    "en": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    "hi": ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"],
+    "gu": ["૦", "૧", "૨", "૩", "૪", "૫", "૬", "૭", "૮", "૯"],
+    "mr": ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"],
+    "bn": ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"],
+    "te": ["౦", "౧", "౨", "౩", "౪", "౫", "౬", "౭", "౮", "౯"],
+    "ta": ["0", "௧", "௨", "௩", "௪", "௫", "௬", "௭", "௮", "௯", "௰"],
+    "kn": ["೦", "೧", "೨", "೩", "೪", "೫", "೬", "೭", "೮", "೯"],
+    "or": ["୦", "୧", "୨", "୩", "୪", "୫", "୬", "୭", "୮", "୯"],
+    "pa": ["੦", "੧", "੨", "੩", "੪", "੫", "੬", "੭", "੮", "੯"],
 }
 
 num_dict = dict()
-num_dict['en'] = {
+num_dict["en"] = {
     "0": "zero",
     "1": "one",
     "2": "two",
@@ -125,9 +124,9 @@ num_dict['en'] = {
     "1000": "thousand",
     "100000": "lakh",
     "10000000": "crore",
-    "1000000000": "arab"
+    "1000000000": "arab",
 }  # English-India
-num_dict['hi'] = {
+num_dict["hi"] = {
     "0": "शून्य",
     "1": "एक",
     "2": "दो",
@@ -232,9 +231,9 @@ num_dict['hi'] = {
     "1000": "हज़ार",
     "100000": "लाख",
     "10000000": "करोड़",
-    "1000000000": "अरब"
+    "1000000000": "अरब",
 }  # Hindi
-num_dict['gu'] = {
+num_dict["gu"] = {
     "0": "શૂન્ય",
     "1": "એક",
     "2": "બે",
@@ -339,9 +338,9 @@ num_dict['gu'] = {
     "1000": "હજાર",
     "100000": "લાખ",
     "1000000": "દસ લાખ",
-    "10000000": "કરોડ઼"
+    "10000000": "કરોડ઼",
 }  # Gujarati
-num_dict['mr'] = {
+num_dict["mr"] = {
     "0": "शून्य",
     "1": "एक",
     "2": "दोन",
@@ -446,9 +445,9 @@ num_dict['mr'] = {
     "1000": "हजार",
     "100000": "लाख",
     "10000000": "कोटी",
-    "1000000000": "अब्ज"
+    "1000000000": "अब्ज",
 }  # Marathi
-num_dict['bn'] = {
+num_dict["bn"] = {
     "0": "শূন্য",
     "1": "এক",
     "2": "দুই",
@@ -553,9 +552,9 @@ num_dict['bn'] = {
     "1000": "হাজার",
     "100000": "লাখ",
     "10000000": "কোটি",
-    "1000000000": "একশ’ কোটি"
+    "1000000000": "একশ’ কোটি",
 }  # Bengali
-num_dict['te'] = {
+num_dict["te"] = {
     "0": "సున్నా",
     "1": "ఒకటి",
     "2": "రెండు",
@@ -660,9 +659,9 @@ num_dict['te'] = {
     "1000": "వేల",
     "100000": "లక్షల",
     "10000000": "కోట్ల",
-    "1000000000": "బిలియన్"
+    "1000000000": "బిలియన్",
 }  # Telugu
-num_dict['ta'] = {
+num_dict["ta"] = {
     "0": "பூஜ்ஜியம்",
     "1": "ஒன்று",
     "2": "இரண்டு",
@@ -767,9 +766,9 @@ num_dict['ta'] = {
     "1000": "ஆயிரம்",
     "100000": "இலட்சம்",
     "10000000": "கோடி",
-    "1000000000": "பில்லியன்"
+    "1000000000": "பில்லியன்",
 }  # Tamil
-num_dict['kn'] = {
+num_dict["kn"] = {
     "0": "ಸೊನ್ನೆ",
     "1": "ಒಂದು",
     "2": "ಎರಡು",
@@ -874,9 +873,9 @@ num_dict['kn'] = {
     "1000": "ಸಾವಿರದ",
     "100000": "ಲಕ್ಷದ",
     "10000000": "ಕೋಟಿ",
-    "1000000000": "ಶತಕೋಟಿ"
+    "1000000000": "ಶತಕೋಟಿ",
 }  # Kannada
-num_dict['or'] = {
+num_dict["or"] = {
     "0": "ଶୁନ୍ୟ",
     "1": "ଏକ",
     "2": "ଦୁଇ",
@@ -981,9 +980,9 @@ num_dict['or'] = {
     "1000": "ହଜାର",
     "100000": "ଲକ୍ଷ",
     "10000000": "କୋଟି",
-    "1000000000": "କୋଟି"
+    "1000000000": "କୋଟି",
 }  # Oriya
-num_dict['pa'] = {
+num_dict["pa"] = {
     "0": "ਸਿਫਰ ",
     "1": "ਇੱਕ",
     "2": "ਦੋ",
@@ -1088,7 +1087,7 @@ num_dict['pa'] = {
     "1000": "ਹਜਾਰ",
     "100000": "ਲੱਖ",
     "10000000": "ਕਰੋੜ",
-    "1000000000": "ਅਰਬ"
+    "1000000000": "ਅਰਬ",
 }  # Punjabi
 
 # --------------------------- num_to_word.py ------------------------------
@@ -1110,14 +1109,15 @@ def language_specific_exception(words, lang, combiner):
     """
     Language Specific Exception will come here
     """
-    def occurs_at_end(piece):
-        return words[-len(piece):] == piece
 
-    if lang == 'mr':
+    def occurs_at_end(piece):
+        return words[-len(piece) :] == piece
+
+    if lang == "mr":
         words = words.replace("एक" + combiner + "शे", "शंभर")
-    elif lang == 'gu':
-        words = words.replace('બે' + combiner + 'સો', 'બસ્સો')
-    elif lang == 'te':
+    elif lang == "gu":
+        words = words.replace("બે" + combiner + "સો", "બસ્સો")
+    elif lang == "te":
         exception_dict = {
             "1": "ఒక",
             "100": "వంద",
@@ -1130,33 +1130,33 @@ def language_specific_exception(words, lang, combiner):
             "10000000+": "కోట్లు",
         }
 
-        test_case = ['100', '1000', '100000', '10000000']
+        test_case = ["100", "1000", "100000", "10000000"]
         for test in test_case:
-            test_word = num_dict['te'][test]
-            match = num_dict['te']['1'] + combiner + test_word
+            test_word = num_dict["te"][test]
+            match = num_dict["te"]["1"] + combiner + test_word
             # for numbers like : 100, 1000, 100000
             if words == match:
                 return exception_dict[test]
             # for numbers like : 200, 4000, 800000
             elif occurs_at_end(test_word):
-                words = words.replace(test_word, exception_dict[test + '+'])
+                words = words.replace(test_word, exception_dict[test + "+"])
             # for numbers like : 105, 1076, 123993
             elif not occurs_at_end(match):
-                replacement = exception_dict['1'] + combiner + exception_dict[test]
+                replacement = exception_dict["1"] + combiner + exception_dict[test]
                 words = words.replace(match, replacement)
 
         # Exception case for 101...199
         special_case = "ఒక" + combiner + "వంద"
         words = words.replace(special_case, "నూట")
-    elif lang == 'kn':
+    elif lang == "kn":
         # special case for 100
-        if words == ('ಒಂದು' + combiner + 'ನೂರ'):
-            return 'ನೂರು'
+        if words == ("ಒಂದು" + combiner + "ನೂರ"):
+            return "ನೂರು"
         exception_dict = {
-            'ನೂರ': 'ನೂರು',
-            'ಸಾವಿರದ': 'ಸಾವಿರ',
-            'ಲಕ್ಷದ': 'ಲಕ್ಷ',
-            'ಕೋಟಿಯ': 'ಕೋಟಿ'
+            "ನೂರ": "ನೂರು",
+            "ಸಾವಿರದ": "ಸಾವಿರ",
+            "ಲಕ್ಷದ": "ಲಕ್ಷ",
+            "ಕೋಟಿಯ": "ಕೋಟಿ",
         }
         for expt in exception_dict:
             if occurs_at_end(expt):
@@ -1164,7 +1164,7 @@ def language_specific_exception(words, lang, combiner):
     return words
 
 
-def num_to_word(num, lang, separator=', ', combiner=' '):
+def num_to_word(num, lang, separator=", ", combiner=" "):
     """
     Main Method
     :param num: Number digits from any indian language
@@ -1177,110 +1177,138 @@ def num_to_word(num, lang, separator=', ', combiner=' '):
     num = str(num)
 
     # Load dictionary according to language code
-    assert lang in supported_lang, 'Language not supported'
+    assert lang in supported_lang, "Language not supported"
     num_dic = num_dict[lang]
 
     # dash default combiner for english-india
-    if (lang == 'en') & (combiner == ' '):
-        combiner = '-'
+    if (lang == "en") & (combiner == " "):
+        combiner = "-"
 
     # Remove punctuations from numbers
-    num = str(num).replace(',', '').replace(' ', '')
+    num = str(num).replace(",", "").replace(" ", "")
 
     # Replace native language numbers with english digits
     for language in supported_lang:
         for num_index in range(10):
-            num = num.replace(all_num[language][num_index], all_num['en'][num_index])
+            num = num.replace(all_num[language][num_index], all_num["en"][num_index])
 
     # Assert that input contains only integer number
     for digit in num:
-        assert digit in all_num['en'], "Give proper input"
+        assert digit in all_num["en"], "Give proper input"
 
     # Process
     # For Number longer than 9 digits
     def all_two_digit(digits_2):
         if len(digits_2) <= 1:  # Provided only one/zero digit
-            return num_dic.get(digits_2, '')
-        elif digits_2 == '00':  # Two Zero provided
-            return num_dic['0'] + separator + num_dic['0']
-        elif digits_2[0] == '0':  # First digit is zero
-            return num_dic['0'] + separator + num_dic[digits_2[1]]
+            return num_dic.get(digits_2, "")
+        elif digits_2 == "00":  # Two Zero provided
+            return num_dic["0"] + separator + num_dic["0"]
+        elif digits_2[0] == "0":  # First digit is zero
+            return num_dic["0"] + separator + num_dic[digits_2[1]]
         else:  # Both digit provided
             return num_dic[digits_2]
 
     # For Number less than 9 digits
     def two_digit(digits_2):
-        digits_2 = digits_2.lstrip('0')
+        digits_2 = digits_2.lstrip("0")
         if len(digits_2) != 0:
             return num_dic[digits_2]
         else:
-            return ''
+            return ""
 
     def all_digit(digits):
-        digits = digits.lstrip('0')
+        digits = digits.lstrip("0")
         digit_len = len(digits)
         if digit_len > 3:
             num_of_digits_to_process = (digit_len % 2) + 1
             process_digits = digits[:num_of_digits_to_process]
-            base = str(10**(int(digit_len / 2) * 2 - 1))
+            base = str(10 ** (int(digit_len / 2) * 2 - 1))
             remain_digits = digits[num_of_digits_to_process:]
-            return num_dic[process_digits] + combiner + num_dic[base] + separator + all_digit(remain_digits)
+            return (
+                num_dic[process_digits]
+                + combiner
+                + num_dic[base]
+                + separator
+                + all_digit(remain_digits)
+            )
         elif len(digits) == 3:
-            return num_dic[digits[:1]] + combiner + num_dic['100'] + separator + two_digit(digits[1:])
+            return (
+                num_dic[digits[:1]]
+                + combiner
+                + num_dic["100"]
+                + separator
+                + two_digit(digits[1:])
+            )
         else:
             return two_digit(digits)
 
-    num = num.lstrip('0')
+    num = num.lstrip("0")
     full_digit_len = len(num)
 
     if full_digit_len == 0:
-        output = num_dic['0']
+        output = num_dic["0"]
     elif full_digit_len <= 9:
         output = all_digit(num)
     else:
         iteration = round(full_digit_len / 2)
         output = all_two_digit(num[:2])  # First to digit
         for i in range(1, iteration):
-            output = output + separator + all_two_digit(num[i * 2:(i + 1) * 2])  # Next two digit pairs
-        remaining_digits = num[iteration * 2:]
-        if not all_two_digit(remaining_digits) == '':
-            output = output + separator + all_two_digit(remaining_digits)  # remaining Last one/two digits
+            output = (
+                output + separator + all_two_digit(num[i * 2 : (i + 1) * 2])
+            )  # Next two digit pairs
+        remaining_digits = num[iteration * 2 :]
+        if not all_two_digit(remaining_digits) == "":
+            output = (
+                output + separator + all_two_digit(remaining_digits)
+            )  # remaining Last one/two digits
 
     output = output.strip(separator)
 
     output = language_specific_exception(output, lang, combiner)
 
     return output
+
+
 # --------------------------------- num_to_word_on_a_sent ---------------------------------
 
+
 def is_digit(word, digit_pattern):
-	return re.search(digit_pattern, word)
+    return re.search(digit_pattern, word)
+
 
 def remove_punct(sent):
-	clean = re.sub('[%s]' % re.escape(string.punctuation), ' ', sent)
-	return ' '.join([word for word in clean.split() if word])
-	
+    clean = re.sub("[%s]" % re.escape(string.punctuation), " ", sent)
+    return " ".join([word for word in clean.split() if word])
+
 
 def normalize_nums(text, lang):
-	'''
-	text: str (eg)
-	lang: lang code ['en', 'hi']
+    """
+    text: str (eg)
+    lang: lang code ['en', 'hi']
 
-	returns: str
-	(eg)
-	'''
-	
-	if lang in supported_lang:
-		words = text.split()
-		lang_digits = [str(i) for i in range(0,10)]
-		
-		digit_pattern = '[' + ''.join(lang_digits) + ']'
-		num_indices = [ind for ind, word in enumerate(words) if is_digit(word, digit_pattern)]
-		
-		words_up = [num_to_word(word, lang, separator=' ', combiner=' ') if ind in num_indices else word for ind, word in enumerate(words)]
-		return ' '.join(words_up)
-	else:
-		return text
+    returns: str
+    (eg)
+    """
 
-if __name__ == '__main__':
-	print(normalize_nums('रीटा के पास 16 बिल्लियाँ हैं।', 'hi'))
+    if lang in supported_lang:
+        words = text.split()
+        lang_digits = [str(i) for i in range(0, 10)]
+
+        digit_pattern = "[" + "".join(lang_digits) + "]"
+        num_indices = [
+            ind for ind, word in enumerate(words) if is_digit(word, digit_pattern)
+        ]
+
+        words_up = [
+            num_to_word(word, lang, separator=" ", combiner=" ")
+            if ind in num_indices
+            else word
+            for ind, word in enumerate(words)
+        ]
+        return " ".join(words_up)
+    else:
+        return text
+
+
+if __name__ == "__main__":
+    print(normalize_nums("रीटा के पास 16 बिल्लियाँ हैं।", "hi"))
