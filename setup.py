@@ -33,6 +33,8 @@ setup(
         "gradio==2.5.2",
         "wavio==0.0.4",
         "pydload==1.0.9",
+        "mosestokenizer==1.2.1",
+        "indic-nlp-library==0.81"
     ],
     classifiers=[
         # How mature is this project? Common values are
