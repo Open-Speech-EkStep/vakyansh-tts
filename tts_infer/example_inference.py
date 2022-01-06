@@ -58,7 +58,8 @@ def run_tts_paragraph(text, lang):
     return (sr, concatenated_audio)
 
 if __name__ == "__main__":
-    # _, audio = run_tts('mera naam neeraj hai', 'hi')
+     _, audio = run_tts('mera naam neeraj hai', 'hi')
+        
     para = '''
     भारत मेरा देश है और मुझे भारतीय होने पर गर्व है। ये विश्व का सातवाँ सबसे बड़ा और विश्व में दूसरा सबसे अधिक जनसंख्या वाला देश है।
     इसे भारत, हिन्दुस्तान और आर्यव्रत के नाम से भी जाना जाता है। ये एक प्रायद्वीप है जो पूरब में बंगाल की खाड़ी, 
@@ -73,5 +74,6 @@ if __name__ == "__main__":
     पश्चिम में अरेबियन सागर और दक्षिण में भारतीय महासागर जैसे तीन महासगरों से घिरा हुआ है। 
     भारत का राष्ट्रीय पशु चीता, राष्ट्रीय पक्षी मोर, राष्ट्रीय फूल कमल, और राष्ट्रीय फल आम है। 
     '''
+    
     print('Num chars in paragraph: ', len(para))
     _, audio_long = run_tts_paragraph(para, 'hi')
