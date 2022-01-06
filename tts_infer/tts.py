@@ -3,6 +3,7 @@ from typing import Tuple
 import sys
 from argparse import ArgumentParser
 
+import torch
 import numpy as np
 import os
 import json
@@ -65,6 +66,11 @@ class TextToMel:
 
         sequence = np.array(text_norm)[None, :]
 
+        del symbols
+        del cleaner
+        del text
+        del text_norm
+
         if self.device == "cuda":
             x_tst = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
             x_tst_lengths = torch.tensor([x_tst.shape[1]]).cuda()
@@ -80,7 +86,9 @@ class TextToMel:
                 noise_scale=noise_scale,
                 length_scale=length_scale,
             )
-
+        del x_tst
+        del x_tst_lengths
+        torch.cuda.empty_cache()
         return y_gen_tst.cpu().detach().numpy()
 
 
@@ -122,6 +130,9 @@ class MelToWav:
         audio = audio * 32768.0
         audio = audio.cpu().detach().numpy().astype("int16")
 
+        del y_g_hat
+        del mel
+        torch.cuda.empty_cache()
         return audio, self.h.sampling_rate
 
 
