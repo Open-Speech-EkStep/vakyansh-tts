@@ -15,7 +15,7 @@ Build conda virtual environment
 cd ./vakyansh-tts
 conda create --name <env_name> python=3.7
 conda activate <env_name>
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 Install [apex](https://github.com/NVIDIA/apex); commit: 37cdaf4 for Mixed-precision training
 ```
@@ -47,7 +47,7 @@ cd tts_infer
 gsutil -m cp -r gs://vakyaansh-open-models/translit_models .
 ```
 
-Usage:
+Usage: Refer to example file in tts_infer/
 ```
 from tts_infer.tts import TextToMel, MelToWav
 from tts_infer.transliterate import XlitEngine
