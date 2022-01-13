@@ -56,7 +56,7 @@ def save_txts_from_txt_done_data(
     num_samples_test,
 ):
     outfile = os.path.join(out_path_for_txts, "annotations.txt")
-    file_lines = open(text_path).read().splitlines()
+    file_lines = open(text_path).readlines()
     # print(file_lines[0])
 
     file_lines = [replace_extra_chars(line) for line in file_lines]
@@ -76,7 +76,7 @@ def save_txts_from_txt_done_data(
     print(chars)
     print(punct_with_space)
 
-    outfile_f = open(outfile, "w", encoding="utf-8")
+    outfile_f = open(outfile, "w+", encoding="utf-8")
     for f, t in zip(fnames, ftexts):
         print(
             os.path.join(wav_path_for_annotations_txt, f) + ".wav",
@@ -84,7 +84,7 @@ def save_txts_from_txt_done_data(
             sep="|",
             file=outfile_f,
         )
-
+    outfile_f.close()
     write_txt(punct_with_space, os.path.join(out_path_for_txts, "punc.txt"))
     write_txt(chars, os.path.join(out_path_for_txts, "chars.txt"))
 
