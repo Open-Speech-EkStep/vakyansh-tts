@@ -50,7 +50,7 @@ class TextToMel:
 
         return hps, glow_tts_model
 
-    def generate_mel(self, text, noise_scale=0.667, length_scale=1.0):
+    def generate_mel(self, text, gender='male',noise_scale=0.667, length_scale=1.0):
         symbols = list(self.hps.data.punc) + list(self.hps.data.chars)
         cleaner = self.hps.data.text_cleaners
         if getattr(self.hps.data, "add_blank", False):
@@ -69,11 +69,19 @@ class TextToMel:
             x_tst = torch.autograd.Variable(torch.from_numpy(sequence)).long()
             x_tst_lengths = torch.tensor([x_tst.shape[1]])
 
+        sid = 1 if gender=='male' else 0
+
+        sid = torch.tensor([sid]).to(torch.long)
+
+        if self.device == 'cuda':
+            sid = sid.cuda()
+        
         with torch.no_grad():
             (y_gen_tst, *_), *_, (attn_gen, *_) = self.glow_tts_model(
                 x_tst,
                 x_tst_lengths,
                 gen=True,
+                g=sid,
                 noise_scale=noise_scale,
                 length_scale=length_scale,
             )
