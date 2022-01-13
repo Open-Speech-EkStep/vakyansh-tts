@@ -69,8 +69,9 @@ class TextToMel:
             x_tst = torch.autograd.Variable(torch.from_numpy(sequence)).long()
             x_tst_lengths = torch.tensor([x_tst.shape[1]])
 
-        sid = 1 if gender=='male' else 0
-
+        
+        sid = self.hps.data.gender[gender]
+        
         sid = torch.tensor([sid]).to(torch.long)
 
         if self.device == 'cuda':
