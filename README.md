@@ -80,6 +80,16 @@ def run_tts(text, lang):
 
 ### 2. Spectogram Training (glow-tts)
 
+filelists for glow-tts
+
+train.txt
+> abs-filepath|transcript
+
+in case of multispeaker:
+> abs-filepath|numerical_speaker_id|transcript
+
+Note - speaker id should be zero indexed
+
 ```
 cd ./scripts
 bash train_glow.sh
@@ -91,12 +101,17 @@ cd ./scripts
 bash generate_mels.sh
 ```
 ### 4. Vocoder Training (hifi-gan)
+filelists for glow-tts
+
+train.txt
+> absolute_filepath_1
+
 
 ```
 cd ./scripts
 bash train_hifi.sh
 ```
-### 4. Inference
+### 5. Inference
 ```
 cd ./scripts
 bash infer.sh
