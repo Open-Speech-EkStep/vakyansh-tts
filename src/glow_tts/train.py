@@ -16,7 +16,6 @@ from data_utils import TextMelLoader, TextMelCollate
 import models
 import commons
 import utils
-from text.symbols import symbols
 
 
 global_step = 0
@@ -82,7 +81,7 @@ def train_and_eval(rank, n_gpus, hps):
             drop_last=True,
             collate_fn=collate_fn,
         )
-
+    symbols = hps.data.punc + hps.data.chars
     generator = models.FlowGenerator(
         n_vocab=len(symbols) + getattr(hps.data, "add_blank", False),
         out_channels=hps.data.n_mel_channels,

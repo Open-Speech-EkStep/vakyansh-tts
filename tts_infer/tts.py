@@ -16,7 +16,7 @@ from hifi.env import AttrDict
 from hifi.models import Generator
 
 
-from processtext import text_to_sequence
+from text import text_to_sequence
 import commons
 import models
 import utils
@@ -58,11 +58,11 @@ class TextToMel:
         symbols = list(self.hps.data.punc) + list(self.hps.data.chars)
         cleaner = self.hps.data.text_cleaners
         if getattr(self.hps.data, "add_blank", False):
-            text_norm = text_to_sequence(symbols, text, cleaner)
+            text_norm = text_to_sequence(text, symbols, cleaner)
             text_norm = commons.intersperse(text_norm, len(symbols))
         else:  # If not using "add_blank" option during training, adding spaces at the beginning and the end of utterance improves quality
             text = " " + text.strip() + " "
-            text_norm = text_to_sequence(symbols, text, cleaner)
+            text_norm = text_to_sequence(text, symbols, cleaner)
 
         sequence = np.array(text_norm)[None, :]
 

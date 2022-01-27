@@ -6,8 +6,6 @@ import torch.utils.data
 import commons
 from utils import load_wav_to_torch, load_filepaths_and_text
 from text import text_to_sequence
-from text.symbols import symbols
-
 
 class TextMelLoader(torch.utils.data.Dataset):
     """
@@ -23,6 +21,7 @@ class TextMelLoader(torch.utils.data.Dataset):
         self.sampling_rate = hparams.sampling_rate
         self.load_mel_from_disk = hparams.load_mel_from_disk
         self.add_noise = hparams.add_noise
+        self.symbols = hparams.punc + hparams.chars
         self.add_blank = getattr(hparams, "add_blank", False)  # improved version
         self.stft = commons.TacotronSTFT(
             hparams.filter_length,
@@ -69,10 +68,10 @@ class TextMelLoader(torch.utils.data.Dataset):
         return melspec
 
     def get_text(self, text):
-        text_norm = text_to_sequence(text, self.text_cleaners)
+        text_norm = text_to_sequence(text, self.symbols, self.text_cleaners)
         if self.add_blank:
             text_norm = commons.intersperse(
-                text_norm, len(symbols)
+                text_norm, len(self.symbols)
             )  # add a blank token, whose id number is len(symbols)
         text_norm = torch.IntTensor(text_norm)
         return text_norm
@@ -146,6 +145,7 @@ class TextMelSpeakerLoader(torch.utils.data.Dataset):
         self.sampling_rate = hparams.sampling_rate
         self.load_mel_from_disk = hparams.load_mel_from_disk
         self.add_noise = hparams.add_noise
+        self.symbols = hparams.punc + hparams.chars
         self.add_blank = getattr(hparams, "add_blank", False)  # improved version
         self.min_text_len = getattr(hparams, "min_text_len", 1)
         self.max_text_len = getattr(hparams, "max_text_len", 190)
@@ -208,10 +208,10 @@ class TextMelSpeakerLoader(torch.utils.data.Dataset):
         return melspec
 
     def get_text(self, text):
-        text_norm = text_to_sequence(text, self.text_cleaners)
+        text_norm = text_to_sequence(text, self.symbols, self.text_cleaners)
         if self.add_blank:
             text_norm = commons.intersperse(
-                text_norm, len(symbols)
+                text_norm, len(self.symbols)
             )  # add a blank token, whose id number is len(symbols)
         text_norm = torch.IntTensor(text_norm)
         return text_norm

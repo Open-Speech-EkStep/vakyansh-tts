@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="vakyansh-tts",
-    version="0.0.1",
+    version="0.0.2",
     description="Text to speech for Indic languages",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -17,7 +17,6 @@ setup(
     python_requires=">=3.7, <4",
     install_requires=[
         "Cython==0.29.24",
-        "inflect==5.3.0",
         "layers==0.1.5",
         "librosa==0.8.1",
         "matplotlib==3.3.4",
@@ -26,7 +25,6 @@ setup(
         "tensorboardX==2.4",
         "tensorboard==2.7.0",
         "torch==1.5.1",
-        "Unidecode==1.3.2",
         "tqdm==4.62.3",
         "fastapi==0.70.0",
         "uvicorn==0.15.0",

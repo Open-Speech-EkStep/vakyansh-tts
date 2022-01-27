@@ -7,7 +7,7 @@ import models
 import utils
 from argparse import ArgumentParser
 from tqdm import tqdm
-from processtext import text_to_sequence
+from text import text_to_sequence
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -37,11 +37,11 @@ if __name__ == "__main__":
 
     def get_mel(text, fpath):
         if getattr(hps.data, "add_blank", False):
-            text_norm = text_to_sequence(symbols, text, cleaner)
+            text_norm = text_to_sequence(text, symbols, cleaner)
             text_norm = commons.intersperse(text_norm, len(symbols))
         else:  # If not using "add_blank" option during training, adding spaces at the beginning and the end of utterance improves quality
             text = " " + text.strip() + " "
-            text_norm = text_to_sequence(symbols, text, cleaner)
+            text_norm = text_to_sequence(text, symbols, cleaner)
 
         sequence = np.array(text_norm)[None, :]
 
