@@ -4,6 +4,7 @@ Text to Speech for Indic languages
 ### 1. Installation and Setup for training
 
 Clone repo
+Note : for multspeaker glow-tts training use branch multispeaker
 ```
 git clone https://github.com/Open-Speech-EkStep/vakyansh-tts
 ```
