@@ -16,6 +16,7 @@ conda activate <env_name>
 pip install -r requirements.txt
 ```
 Install [apex](https://github.com/NVIDIA/apex); commit: 37cdaf4 for Mixed-precision training
+
 Note : used only for glow-tts
 ```
 cd ..
@@ -26,6 +27,7 @@ pip install -v --disable-pip-version-check --no-cache-dir ./
 cd ../vakyansh-tts
 ```
 Build Monotonic Alignment Search Code (Cython)
+
 Note : used only for glow-tts
 ```
 bash install.sh
