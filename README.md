@@ -1,9 +1,6 @@
 # vakyansh-tts
 Text to Speech for Indic languages
 
-## Pretrained Models
-The pretrained models are hosted in a seperate repository [here](https://github.com/Open-Speech-EkStep/vakyansh-models#tts-models-repo)
-
 ### 1. Installation and Setup for training
 
 Clone repo
