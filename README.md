@@ -103,7 +103,7 @@ cd ./scripts
 bash generate_mels.sh
 ```
 ### 4. Vocoder Training (hifi-gan)
-filelists for glow-tts
+filelists for hifi-gan
 
 train.txt
 > absolute_filepath_1
