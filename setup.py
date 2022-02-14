@@ -20,7 +20,7 @@ setup(
         "layers==0.1.5",
         "librosa==0.8.1",
         "matplotlib==3.3.4",
-        "numpy==1.19.5",
+        "numpy==1.20.2",
         "scipy==1.5.4",
         "tensorboardX==2.4",
         "tensorboard==2.7.0",
