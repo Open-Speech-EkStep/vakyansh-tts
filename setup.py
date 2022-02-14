@@ -24,7 +24,6 @@ setup(
         "scipy==1.5.4",
         "tensorboardX==2.4",
         "tensorboard==2.7.0",
-        "torch==1.5.1",
         "tqdm==4.62.3",
         "fastapi==0.70.0",
         "uvicorn==0.15.0",
