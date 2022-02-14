@@ -22,8 +22,8 @@ def split_sentences(paragraph, language):
 
 
 device='cpu'
-text_to_mel = TextToMel(glow_model_dir='/Users/neerajchhimwal/ekstep-speech-recognition/TTS_models/hindi/male/glow_ckp', device=device)
-mel_to_wav = MelToWav(hifi_model_dir='/Users/neerajchhimwal/ekstep-speech-recognition/TTS_models/hindi/male/hifi_ckp', device=device)
+text_to_mel = TextToMel(glow_model_dir='/path/to/glow_ckp', device=device)
+mel_to_wav = MelToWav(hifi_model_dir='/path/to/hifi_ckp', device=device)
 
 lang='hi' # transliteration from En to Hi
 engine = XlitEngine(lang) # loading translit model globally
