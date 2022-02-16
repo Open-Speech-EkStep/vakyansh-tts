@@ -9,4 +9,4 @@ valid_samples=100
 test_samples=10
 
 mkdir -p $output_data_path
-python ../../utils/glow/prepare_iitm_data_glow.py -i $input_text_path -o $output_data_path -w $input_wav_path -v $valid_samples -t $test_samples
+python ../../utils/glow/prepare_iitm_data_glow_en.py -i $input_text_path -o $output_data_path -w $input_wav_path -v $valid_samples -t $test_samples
