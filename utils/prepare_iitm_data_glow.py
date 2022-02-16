@@ -103,9 +103,9 @@ def save_txts_from_txt_done_data(
 
 
 if __name__ == "__main__":
-    text_path = "/home/harveen/bengali/iitm/bengali_female/txt.done.data"
-    out_path_for_txts = "../data/glow/female"
-    wav_path_for_annotations_txt = "/home/harveen/bengali/iitm/bengali_female/wav_22k"
+    text_path = "txt.done.data"
+    out_path_for_txts = "female"
+    wav_path_for_annotations_txt = "wav_22k"
     num_samples_valid = 100
     num_samples_test = 10
     save_txts_from_txt_done_data(
