@@ -90,6 +90,7 @@ def save_txts_from_txt_done_data(
         json.dump(json_config, jfile)
     
     print(f"Characters: {chars}")
+    print(f"Len of vocab: {len(chars)}")
     print(f"Punctuation: {punct_with_space}")
     print(f"Config file is stored at ../../config/glow/{new_config_name}.json")
 
