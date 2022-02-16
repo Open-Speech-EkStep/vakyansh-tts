@@ -70,7 +70,7 @@ def save_txts_from_txt_done_data(
     for line in file_lines:
         elems = line.split('"')
         fnames.append(elems[0].strip())
-        ftexts.append(elems[1].strip())
+        ftexts.append(elems[1].strip().replace('‘','\'').replace('’','\''))
 
     all_chars = list(set("".join(ftexts)))
     punct_with_space = [i for i in all_chars if i in list(string.punctuation)] + [" "]
