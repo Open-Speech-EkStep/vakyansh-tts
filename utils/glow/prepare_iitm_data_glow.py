@@ -78,12 +78,12 @@ def save_txts_from_txt_done_data(
     chars = "".join(chars)
     punct_with_space = "".join(punct_with_space)
     char_string = f'    \"chars\":\"{chars}\",'
-    cmd = f"sed '21s/.*/{char_string}/' ../config/glow/base_blank.json > ../config/glow/new.json"
+    cmd = f"sed '21s/.*/{char_string}/' ../../config/glow/base_blank.json > ../../config/glow/new.json"
     os.system(cmd)
     punct_string = f'    \"punc\":\"{punct_with_space}\",'
-    cmd2 = f"sed '22s/.*/{punct_string}/' ../config/glow/new.json > ../config/glow/new1.json"
+    cmd2 = f"sed '22s/.*/{punct_string}/' ../../config/glow/new.json > ../../config/glow/new1.json"
     os.system(cmd2)
-    os.system("mv ../config/glow/new1.json ../config/glow/new.json")
+    os.system("mv ../../config/glow/new1.json ../../config/glow/new.json")
     print(chars)
     print(punct_with_space)
 
