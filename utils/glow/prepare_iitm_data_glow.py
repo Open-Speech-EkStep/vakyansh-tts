@@ -2,6 +2,8 @@ import os
 from glob import glob
 import re
 import string
+import argparse
+
 import random
 random.seed(42)
 
@@ -56,7 +58,9 @@ def save_txts_from_txt_done_data(
     num_samples_test,
 ):
     outfile = os.path.join(out_path_for_txts, "annotations.txt")
-    file_lines = open(text_path).readlines()
+    with open(text_path) as file:
+        file_lines = file.readlines()
+
     # print(file_lines[0])
 
     file_lines = [replace_extra_chars(line) for line in file_lines]
@@ -74,12 +78,12 @@ def save_txts_from_txt_done_data(
     chars = "".join(chars)
     punct_with_space = "".join(punct_with_space)
     char_string = f'    \"chars\":\"{chars}\",'
-    cmd = f"sed '21s/.*/{char_string}/' ../config/glow-tts/base_blank.json > ../config/glow-tts/new.json"
+    cmd = f"sed '21s/.*/{char_string}/' ../config/glow/base_blank.json > ../config/glow/new.json"
     os.system(cmd)
     punct_string = f'    \"punc\":\"{punct_with_space}\",'
-    cmd2 = f"sed '22s/.*/{punct_string}/' ../config/glow-tts/new.json > ../config/glow-tts/new1.json"
+    cmd2 = f"sed '22s/.*/{punct_string}/' ../config/glow/new.json > ../config/glow/new1.json"
     os.system(cmd2)
-    os.system("mv ../config/glow-tts/new1.json ../config/glow-tts/new.json")
+    os.system("mv ../config/glow/new1.json ../config/glow/new.json")
     print(chars)
     print(punct_with_space)
 
@@ -102,16 +106,23 @@ def save_txts_from_txt_done_data(
     )
 
 
+
+
 if __name__ == "__main__":
-    text_path = "txt.done.data"
-    out_path_for_txts = "female"
-    wav_path_for_annotations_txt = "wav_22k"
-    num_samples_valid = 100
-    num_samples_test = 10
+
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--text-path", type=str, required=True)
+    parser.add_argument("-o", "--output-path", type=str, required=True)
+    parser.add_argument("-w", "--wav-path", type=str, required=True)
+    parser.add_argument("-v", "--valid-samples", type=int, default = 100)
+    parser.add_argument("-t", "--test-samples", type=int, default = 10)
+    args = parser.parse_args()
+
     save_txts_from_txt_done_data(
-        text_path,
-        wav_path_for_annotations_txt,
-        out_path_for_txts,
-        num_samples_valid,
-        num_samples_test,
+        args.text_path,
+        args.output_path,
+        args.wav_path,
+        args.valid_samples,
+        args.test_samples,
     )

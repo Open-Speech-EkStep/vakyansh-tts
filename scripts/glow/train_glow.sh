@@ -1,9 +1,14 @@
 #!/bin/bash
 
-config=''
-modeldir=''
-logdir=''
-init=1 # 1, start from scratch - 0, start from last checkpoint
+gender=''
+
+config='../../config/glow/new.json'
+modeldir='../../checkpoints/glow/'$gender
+logdir='../../logs/glow/'$gender
+init=1  # 1 if start from scratch. 0 if start from last checkpoint
+
+
+####################################################
 
 if [[ $init -eq 1 ]]
 then
