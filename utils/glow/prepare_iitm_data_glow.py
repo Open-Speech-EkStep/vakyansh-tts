@@ -77,15 +77,21 @@ def save_txts_from_txt_done_data(
     chars = [i for i in all_chars if i not in punct_with_space if i.strip()]
     chars = "".join(chars)
     punct_with_space = "".join(punct_with_space)
-    char_string = f'    \"chars\":\"{chars}\",'
-    cmd = f"sed '21s/.*/{char_string}/' ../../config/glow/base_blank.json > ../../config/glow/new.json"
-    os.system(cmd)
-    punct_string = f'    \"punc\":\"{punct_with_space}\",'
-    cmd2 = f"sed '22s/.*/{punct_string}/' ../../config/glow/new.json > ../../config/glow/new1.json"
-    os.system(cmd2)
-    os.system("mv ../../config/glow/new1.json ../../config/glow/new.json")
-    print(chars)
-    print(punct_with_space)
+    
+    with open('../../config/glow/base_blank.json', 'r') as jfile:
+        json_config = json.load(jfile)
+
+    json_config["data"]["chars"] = chars
+    json_config["data"]["punc"] = punct_with_space
+    json_config["data"]["training_files"]=out_path_for_txts + '/train.txt'
+    json_config["data"]["validation_files"] = out_path_for_txts + '/valid.txt'
+    new_config_name = out_path_for_txts.split('/')[-1]
+    with open(f'../../config/glow/{new_config_name}.json','w+') as jfile:
+        json.dump(json_config, jfile)
+    
+    print(f"Characters: {chars}")
+    print(f"Punctuation: {punct_with_space}")
+    print(f"Config file is stored at ../../config/glow/{new_config_name}.json")
 
     outfile_f = open(outfile, "w+", encoding="utf-8")
     for f, t in zip(fnames, ftexts):
@@ -121,8 +127,8 @@ if __name__ == "__main__":
 
     save_txts_from_txt_done_data(
         args.text_path,
-        args.output_path,
         args.wav_path,
+        args.output_path,
         args.valid_samples,
         args.test_samples,
     )
