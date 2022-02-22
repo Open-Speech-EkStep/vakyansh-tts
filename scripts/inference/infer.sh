@@ -11,4 +11,4 @@ wav_file=$wav/$timestamp'.wav'
 
 
 mkdir -p $wav
-python ../../src/glow_tts/texttospeech.py -m $glowdir -g $hifidir -d $device -t "$text" -w $wav_file
+python ../../utils/inference/tts.py -m $glowdir -g $hifidir -d $device -t "$text" -w $wav_file
