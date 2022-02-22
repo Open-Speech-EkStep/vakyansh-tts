@@ -1,8 +1,7 @@
-''' Example file to test tts_infer after installing it. Refer to section 1.1 in README.md for steps of installation. '''
 
-from tts_infer.tts import TextToMel, MelToWav
-from tts_infer.transliterate import XlitEngine
-from tts_infer.num_to_word_on_sent import normalize_nums
+from tts import TextToMel, MelToWav
+from transliterate import XlitEngine
+from num_to_word_on_sent import normalize_nums
 
 import re
 import numpy as np
@@ -11,7 +10,14 @@ from scipy.io.wavfile import write
 from mosestokenizer import *
 from indicnlp.tokenize import sentence_tokenize
 
-INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
+_INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
+_PURAM_VIRAM_LANGUAGES = ["hi", "or", "bn", "as"]
+
+def normalize_text(text, lang):
+    if lang in _PURAM_VIRAM_LANGUAGES:
+        text = text.replace('|', '।')
+        text = text.replace('.', '।')
+    return text
 
 def split_sentences(paragraph, language):
     if language == "en":
@@ -21,12 +27,12 @@ def split_sentences(paragraph, language):
         return sentence_tokenize.sentence_split(paragraph, lang=language)
 
 
-device='cpu'
-text_to_mel = TextToMel(glow_model_dir='/path/to/glow_ckp', device=device)
-mel_to_wav = MelToWav(hifi_model_dir='/path/to/hifi_ckp', device=device)
 
-lang='hi' # transliteration from En to Hi
-engine = XlitEngine(lang) # loading translit model globally
+def load_models(acoustic, vocoder, device):
+    text_to_mel = TextToMel(glow_model_dir=acoustic, device=device)
+    mel_to_wav = MelToWav(hifi_model_dir=vocoder, device=device)
+
+
 
 def translit(text, lang):
     reg = re.compile(r'[a-zA-Z]')
@@ -34,32 +40,74 @@ def translit(text, lang):
     updated_sent = ' '.join(words)
     return updated_sent
     
-def run_tts(text, lang):
-    text = text.replace('।', '.') # only for hindi models
-    text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
-    text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
+
+
+def run_tts(text, lang, args):
+    if lang == 'hi':
+        text = text.replace('।', '.') # only for hindi models
+    
+    if args.number_conversion:
+        text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
+    else:
+        text_num_to_word = text
+    
+    if args.transliteration:
+        text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
+    else:
+        text_num_to_word_and_transliterated = text_num_to_word
+
     final_text = ' ' + text_num_to_word_and_transliterated
 
     mel = text_to_mel.generate_mel(final_text)
     audio, sr = mel_to_wav.generate_wav(mel)
-    write(filename='temp.wav', rate=sr, data=audio) # for saving wav file, if needed
-    return (sr, audio)
+    return sr, audio
 
-def run_tts_paragraph(text, lang):
+def run_tts_paragraph(args):
     audio_list = []
-    split_sentences_list = split_sentences(text, language='hi')
+    if args.split_sentences:
+        text = normalize_text(args.text, args.lang)
+        split_sentences_list = split_sentences(text, args.lang)
 
-    for sent in split_sentences_list:
-        sr, audio = run_tts(sent, lang)
-        audio_list.append(audio)
+        for sent in split_sentences_list:
+            sr, audio = run_tts(sent, args.lang, args)
+            audio_list.append(audio)
 
-    concatenated_audio = np.concatenate([i for i in audio_list])
-    write(filename='temp_long.wav', rate=sr, data=concatenated_audio)
-    return (sr, concatenated_audio)
+        concatenated_audio = np.concatenate([i for i in audio_list])
+        write(filename=args.wav, rate=sr, data=concatenated_audio)
+        return (sr, concatenated_audio)
+    else:
+        sr, audio = run_tts(args.text, args.lang, args)
+        write(filename=args.wav, rate=sr, data=audio)
+        return (sr, audio)
+
+
+
 
 if __name__ == "__main__":
-    _, audio = run_tts('mera naam neeraj hai', 'hi')
-        
+
+    parser = ArgumentParser()
+    parser.add_argument("-a", "--acoustic", required=True, type=str)
+    parser.add_argument("-v", "--vocoder", required=True, type=str)
+    parser.add_argument("-d", "--device", type=str, default="cpu")
+    parser.add_argument("-t", "--text", type=str, required=True)
+    parser.add_argument("-w", "--wav", type=str, required=True)
+    parser.add_argument("-n", "--noise-scale", default=0.667, type=restricted_float )
+    parser.add_argument("-l", "--length-scale", default=1.0, type=float)
+
+    parser.add_argument("-T", "--transliteration", action='store_true')
+    parser.add_argument("-N", "--number-conversion", action='store_true')
+    parser.add_argument("-S", "--split-sentences", action='store_true')
+    parser.add_argument("-L", "--lang", type=str, required=True)
+
+    args = parser.parse_args()
+
+    global engine
+    engine = XlitEngine(args.lang) # loading translit model globally
+
+
+    run_tts_paragraph(args)
+
+            
     para = '''
     भारत मेरा देश है और मुझे भारतीय होने पर गर्व है। ये विश्व का सातवाँ सबसे बड़ा और विश्व में दूसरा सबसे अधिक जनसंख्या वाला देश है।
     इसे भारत, हिन्दुस्तान और आर्यव्रत के नाम से भी जाना जाता है। ये एक प्रायद्वीप है जो पूरब में बंगाल की खाड़ी, 
@@ -75,5 +123,3 @@ if __name__ == "__main__":
     भारत का राष्ट्रीय पशु चीता, राष्ट्रीय पक्षी मोर, राष्ट्रीय फूल कमल, और राष्ट्रीय फल आम है। 
     '''
     
-    print('Num chars in paragraph: ', len(para))
-    _, audio_long = run_tts_paragraph(para, 'hi')

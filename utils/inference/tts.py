@@ -33,7 +33,6 @@ class TextToMel:
         check_directory(self.glow_model_dir)
         self.device = device
         self.hps, self.glow_tts_model = self.load_glow_tts()
-        pass
 
     def load_glow_tts(self):
         hps = utils.get_hparams_from_dir(self.glow_model_dir)
@@ -99,7 +98,6 @@ class MelToWav:
         check_directory(self.hifi_model_dir)
         self.device = device
         self.h, self.hifi_gan_generator = self.load_hifi_gan()
-        pass
 
     def load_hifi_gan(self):
         checkpoint_path = utils.latest_checkpoint_path(self.hifi_model_dir, regex="g_*")
