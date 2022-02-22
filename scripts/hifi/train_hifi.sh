@@ -11,7 +11,7 @@ logdir='../../logs/hifi/'$gender
 
 
 
-python ../src/hifi_gan/train.py \
+python ../../src/hifi_gan/train.py \
     --config $config \
     --input_training_file '../../data/hifi/'$gender'/train.txt' \
     --input_validation_file '../../data/hifi/'$gender'/valid.txt' \
