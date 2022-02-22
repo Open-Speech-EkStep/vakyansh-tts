@@ -113,7 +113,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
     global engine
-    engine = XlitEngine(args.lang) # loading translit model globally
+    if args.lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
+        engine = XlitEngine(args.lang) # loading translit model globally
 
 
     run_tts_paragraph(args)
