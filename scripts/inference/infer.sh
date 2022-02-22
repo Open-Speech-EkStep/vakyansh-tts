@@ -11,5 +11,5 @@ wav_file=$wav/$timestamp'.wav'
 
 
 mkdir -p $wav
-python ../../utils/inference/tts.py -a $glowdir -v $hifidir -d $device -t "$text" -w $wav_file
+python ../../utils/inference/tts.py -a $glowdir -v $hifidir -d $device -t "$text" -w $wav_file 
 echo "File saved at: "$wav_file

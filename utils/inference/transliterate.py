@@ -10,8 +10,8 @@ import enum
 import traceback
 import re
 
-F_DIR = os.path.dirname(os.path.realpath(__file__))
-
+#F_DIR = os.path.dirname(os.path.realpath(__file__))
+F_DIR = '../../checkpoints/'
 
 class XlitError(enum.Enum):
     lang_err = "Unsupported langauge ID requested ;( Please check available languages."

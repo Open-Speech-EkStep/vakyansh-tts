@@ -9,6 +9,7 @@ from scipy.io.wavfile import write
 
 from mosestokenizer import *
 from indicnlp.tokenize import sentence_tokenize
+import argparse
 
 _INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 _PURAM_VIRAM_LANGUAGES = ["hi", "or", "bn", "as"]
@@ -80,19 +81,28 @@ def run_tts_paragraph(args):
         write(filename=args.wav, rate=sr, data=audio)
         return (sr, audio)
 
+def restricted_float(x):
+    print(x)
+    try:
+        x = float(x)
+    except ValueError:
+        raise argparse.ArgumentTypeError("%r not a floating-point literal" % (x,))
 
+    if x < 0.0 or x > 1.0:
+        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]"%(x,))
+    return x
 
 
 if __name__ == "__main__":
 
-    parser = ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--acoustic", required=True, type=str)
     parser.add_argument("-v", "--vocoder", required=True, type=str)
     parser.add_argument("-d", "--device", type=str, default="cpu")
     parser.add_argument("-t", "--text", type=str, required=True)
     parser.add_argument("-w", "--wav", type=str, required=True)
-    parser.add_argument("-n", "--noise-scale", default=0.667, type=restricted_float )
-    parser.add_argument("-l", "--length-scale", default=1.0, type=float)
+    parser.add_argument("-n", "--noise-scale", default='0.667', type=str )
+    parser.add_argument("-l", "--length-scale", default='1.0', type=str)
 
     parser.add_argument("-T", "--transliteration", action='store_true')
     parser.add_argument("-N", "--number-conversion", action='store_true')
@@ -100,7 +110,7 @@ if __name__ == "__main__":
     parser.add_argument("-L", "--lang", type=str, required=True)
 
     args = parser.parse_args()
-
+    print(args)
     global engine
     engine = XlitEngine(args.lang) # loading translit model globally
 
