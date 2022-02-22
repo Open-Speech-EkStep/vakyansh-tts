@@ -55,6 +55,7 @@ class TextToMel:
         return hps, glow_tts_model
 
     def generate_mel(self, text, noise_scale=0.667, length_scale=1.0):
+        print(f"Noise scale: {noise_scale} and Length scale: {length_scale}")
         symbols = list(self.hps.data.punc) + list(self.hps.data.chars)
         cleaner = self.hps.data.text_cleaners
         if getattr(self.hps.data, "add_blank", False):
