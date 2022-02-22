@@ -13,6 +13,7 @@ import argparse
 
 _INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 _PURAM_VIRAM_LANGUAGES = ["hi", "or", "bn", "as"]
+_TRANSLITERATION_NOT_AVAILABLE_IN = ["en"]
 
 def normalize_text(text, lang):
     if lang in _PURAM_VIRAM_LANGUAGES:
@@ -52,7 +53,7 @@ def run_tts(text, lang, args):
     else:
         text_num_to_word = text
     
-    if args.transliteration:
+    if args.transliteration and lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
         text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
     else:
         text_num_to_word_and_transliterated = text_num_to_word
