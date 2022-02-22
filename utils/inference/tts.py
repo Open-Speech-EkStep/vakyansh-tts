@@ -157,8 +157,8 @@ if __name__ == "__main__":
     parser.add_argument("-w", "--wav", type=str, required=True)
     # parser.add_argument("-T", "--transliteration", type=str, required=True)
     # parser.add_argument("-N", "--number-conversion", type=str, required=True)
-    parser.add_argument("-n", "--noise-scale", default=None, type=restricted_float )
-    parser.add_argument("-l", "--length-scale", default=None, type=float)
+    parser.add_argument("-n", "--noise-scale", default=0.667, type=restricted_float )
+    parser.add_argument("-l", "--length-scale", default=1.0, type=float)
 
     args = parser.parse_args()
 
