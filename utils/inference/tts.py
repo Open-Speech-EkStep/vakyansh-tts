@@ -9,7 +9,7 @@ import os
 import json
 import torch
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../src/glow_tts"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../src/glow_tts"))
 
 from scipy.io.wavfile import write
 from hifi.env import AttrDict
@@ -161,12 +161,11 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    text_to_mel = TextToMel(glow_model_dir=args.model, device=args.device)
-    mel_to_wav = MelToWav(hifi_model_dir=args.gan, device=args.device)
+    text_to_mel = TextToMel(glow_model_dir=args.acoustic, device=args.device)
+    mel_to_wav = MelToWav(hifi_model_dir=args.vocoder, device=args.device)
 
     mel = text_to_mel.generate_mel(args.text)
     audio, sr = mel_to_wav.generate_wav(mel)
 
     write(filename=args.wav, rate=sr, data=audio)
 
-    pass
