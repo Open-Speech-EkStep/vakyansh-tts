@@ -49,11 +49,13 @@ def run_tts(text, lang, args):
         text = text.replace('।', '.') # only for hindi models
     
     if args.number_conversion:
+        print("Doing number conversion")
         text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
     else:
         text_num_to_word = text
     
     if args.transliteration and lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
+        print("Doing transliteration")
         text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
     else:
         text_num_to_word_and_transliterated = text_num_to_word
@@ -82,16 +84,6 @@ def run_tts_paragraph(args):
         write(filename=args.wav, rate=sr, data=audio)
         return (sr, audio)
 
-def restricted_float(x):
-    print(x)
-    try:
-        x = float(x)
-    except ValueError:
-        raise argparse.ArgumentTypeError("%r not a floating-point literal" % (x,))
-
-    if x < 0.0 or x > 1.0:
-        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]"%(x,))
-    return x
 
 
 if __name__ == "__main__":
@@ -111,7 +103,7 @@ if __name__ == "__main__":
     parser.add_argument("-L", "--lang", type=str, required=True)
 
     args = parser.parse_args()
-    print(args)
+
     global engine
     if args.lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
         engine = XlitEngine(args.lang) # loading translit model globally
@@ -121,6 +113,10 @@ if __name__ == "__main__":
 
     text_to_mel, mel_to_wav = load_models(args.acoustic, args.vocoder, args.device)
 
+    args.noise_scale = float(args.noise_scale)
+    args.length_scale = float(args.length_scale)
+
+    print(args)
     run_tts_paragraph(args)
 
             
