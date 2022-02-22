@@ -40,7 +40,7 @@ def process_data(args):
 
     valid_set = random.sample(valid_set, len(valid_set))
     test_set = random.sample(test_set, len(test_set))
-    train_set = random.sample(train_set, len(train_set))
+    training_set = random.sample(training_set, len(training_set))
 
     with open(os.path.join(dest_path , 'valid.txt'), mode = 'w+') as file:
         file.write("\n".join(list(valid_set)))
