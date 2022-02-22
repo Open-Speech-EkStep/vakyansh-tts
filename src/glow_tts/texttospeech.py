@@ -122,6 +122,17 @@ class MelToWav:
         return audio, self.h.sampling_rate
 
 
+def restricted_float(x):
+    try:
+        x = float(x)
+    except ValueError:
+        raise argparse.ArgumentTypeError("%r not a floating-point literal" % (x,))
+
+    if x < 0.0 or x > 1.0:
+        raise argparse.ArgumentTypeError("%r not in range [0.0, 1.0]"%(x,))
+    return x
+
+
 if __name__ == "__main__":
 
     parser = ArgumentParser()
@@ -130,12 +141,14 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--device", type=str, default="cpu")
     parser.add_argument("-t", "--text", type=str, required=True)
     parser.add_argument("-w", "--wav", type=str, required=True)
+    parser.add_argument("-n", "--noise-scale", default=None, type=restricted_float )
+    parser.add_argument("-l", "--length-scale", default=None, type=float)
     args = parser.parse_args()
 
     text_to_mel = TextToMel(glow_model_dir=args.model, device=args.device)
     mel_to_wav = MelToWav(hifi_model_dir=args.gan, device=args.device)
 
-    mel = text_to_mel.generate_mel(args.text)
+    mel = text_to_mel.generate_mel(args.text, noise_scale = args.noise_scale, length_scale= args.length_scale)
     audio, sr = mel_to_wav.generate_wav(mel)
 
     write(filename=args.wav, rate=sr, data=audio)
