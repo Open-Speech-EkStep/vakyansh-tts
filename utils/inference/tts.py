@@ -165,7 +165,7 @@ if __name__ == "__main__":
     text_to_mel = TextToMel(glow_model_dir=args.acoustic, device=args.device)
     mel_to_wav = MelToWav(hifi_model_dir=args.vocoder, device=args.device)
 
-    mel = text_to_mel.generate_mel(args.text)
+    mel = text_to_mel.generate_mel(args.text, args.noise_scale, args.length_scale)
     audio, sr = mel_to_wav.generate_wav(mel)
 
     write(filename=args.wav, rate=sr, data=audio)
