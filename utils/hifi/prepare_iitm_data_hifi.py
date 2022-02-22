@@ -54,10 +54,10 @@ def process_data(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i','--input-path',type='str',help='path to input wav files')
-    parser.add_argument('-v','--valid-files',type='int',help='number of valid files')
-    parser.add_argument('-t','--test-files',type='int',help='number of test files')
-    parser.add_argument('-d','--dest-path',type='str',help='destination path to output filelists')
+    parser.add_argument('-i','--input-path',type=str,help='path to input wav files')
+    parser.add_argument('-v','--valid-files',type=int,help='number of valid files')
+    parser.add_argument('-t','--test-files',type=int,help='number of test files')
+    parser.add_argument('-d','--dest-path',type=str,help='destination path to output filelists')
 
     args = parser.parse_args()
 
