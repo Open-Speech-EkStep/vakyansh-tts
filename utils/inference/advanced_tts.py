@@ -33,7 +33,7 @@ def split_sentences(paragraph, language):
 def load_models(acoustic, vocoder, device):
     text_to_mel = TextToMel(glow_model_dir=acoustic, device=device)
     mel_to_wav = MelToWav(hifi_model_dir=vocoder, device=device)
-
+    return text_to_mel, mel_to_wav
 
 
 def translit(text, lang):
@@ -116,6 +116,10 @@ if __name__ == "__main__":
     if args.lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
         engine = XlitEngine(args.lang) # loading translit model globally
 
+    global text_to_mel
+    global mel_to_wav
+
+    text_to_mel, mel_to_wav = load_models(args.acoustic, args.vocoder, args.device)
 
     run_tts_paragraph(args)
 
