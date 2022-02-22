@@ -97,9 +97,9 @@ if __name__ == "__main__":
     parser.add_argument("-n", "--noise-scale", default='0.667', type=str )
     parser.add_argument("-l", "--length-scale", default='1.0', type=str)
 
-    parser.add_argument("-T", "--transliteration", action='store_true')
-    parser.add_argument("-N", "--number-conversion", action='store_true')
-    parser.add_argument("-S", "--split-sentences", action='store_true')
+    parser.add_argument("-T", "--transliteration", default=1, type=int)
+    parser.add_argument("-N", "--number-conversion", default=1, type=int)
+    parser.add_argument("-S", "--split-sentences", default=1, type=int)
     parser.add_argument("-L", "--lang", type=str, required=True)
 
     args = parser.parse_args()

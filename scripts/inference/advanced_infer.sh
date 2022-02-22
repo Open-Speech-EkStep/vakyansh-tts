@@ -17,12 +17,6 @@ wav_file=$wav/$timestamp'.wav'
 
 
 mkdir -p $wav
-cmd='../../utils/inference/advanced_tts.py -a $glowdir -v $hifidir -d $device -t "$text" -w $wav_file -L $lang -n $noise_scale -l $length_scale'
 
-if [[ $transliteration == 1 ]]
-then
-    cmd=$cmd' -T'
-fi
-
-python $cmd 
+python ../../utils/inference/advanced_tts.py -a $glowdir -v $hifidir -d $device -t "$text" -w $wav_file -L $lang -n $noise_scale -l $length_scale -T $transliteration -N $number_conversion -S $split_sentences
 echo "File saved at: "$wav_file
