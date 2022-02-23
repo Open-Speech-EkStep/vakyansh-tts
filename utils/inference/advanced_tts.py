@@ -13,7 +13,8 @@ import argparse
 
 _INDIC = ["as", "bn", "gu", "hi", "kn", "ml", "mr", "or", "pa", "ta", "te"]
 _PURAM_VIRAM_LANGUAGES = ["hi", "or", "bn", "as"]
-_TRANSLITERATION_NOT_AVAILABLE_IN = ["en"]
+_TRANSLITERATION_NOT_AVAILABLE_IN = ["en","or"]
+#_NUM2WORDS_NOT_AVAILABLE_IN = []
 
 def normalize_text(text, lang):
     if lang in _PURAM_VIRAM_LANGUAGES:
