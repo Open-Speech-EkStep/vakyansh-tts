@@ -33,7 +33,7 @@ async def tts(input: TextJson):
 
     args = Namespace(**input.dict())
 
-    args.wav = '../../results/'+str(int(time.time())) + '.wav'
+    args.wav = '../../results/api/'+str(int(time.time())) + '.wav'
 
     if text:
         sr, audio = run_tts_paragraph(args)
