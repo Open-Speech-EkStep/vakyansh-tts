@@ -41,7 +41,7 @@ async def tts(input: TextJson):
         raise HTTPException(status_code=400, detail={"error": "No text"})
 
     ## to return outpur as a file
-    audio = with open(args.wav, mode='rb')
+    audio = open(args.wav, mode='rb')
     return StreamingResponse(audio, media_type="audio/wav")
 
     # with open(args.wav, "rb") as audio_file:
