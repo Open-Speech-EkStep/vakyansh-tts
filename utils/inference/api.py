@@ -9,6 +9,7 @@ import base64
 import argparse
 import json
 import time
+from argparse import Namespace
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ class TextJson(BaseModel):
     transliteration: Optional[int]=1
     number_conversion: Optional[int]=1
     split_sentences: Optional[int]=1
-    wav_file: str
+
 
 
 
@@ -30,9 +31,9 @@ async def tts(input: TextJson):
     text = input.text
     lang = input.lang
 
-    args = Namespace(**(json.loads(input)))
+    args = Namespace(**input.dict())
 
-    args.wav_file = '../../results/'+time.time() + '.wav'
+    args.wav = '../../results/'+str(int(time.time())) + '.wav'
 
     if text:
         sr, audio = run_tts_paragraph(args)
@@ -43,7 +44,7 @@ async def tts(input: TextJson):
     # audio = open('out.wav', mode='rb')
     # return StreamingResponse(audio, media_type="audio/wav")
 
-    with open(args.wav_file, "rb") as audio_file:
+    with open(args.wav, "rb") as audio_file:
         encoded_bytes = base64.b64encode(audio_file.read())
         encoded_string = encoded_bytes.decode()
     return {"encoding": "base64", "data": encoded_string, "sr": sr}
@@ -61,5 +62,5 @@ if __name__ == "__main__":
     load_all_models(args)
 
     uvicorn.run(
-        "t2s_fastapi:app", host="127.0.0.1", port=5000, log_level="info", reload=True
+        "api:app", host="0.0.0.0", port=6006, log_level="debug"
     )
