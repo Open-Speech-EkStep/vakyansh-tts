@@ -54,7 +54,10 @@ def run_tts(text, lang, args):
         text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
     else:
         text_num_to_word = text
-    
+
+    if lang == 'en':
+        text_num_to_word = text_num_to_word.lower()
+
     if args.transliteration and lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
         print("Doing transliteration")
         text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
