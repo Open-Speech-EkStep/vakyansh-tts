@@ -49,14 +49,12 @@ def run_tts(text, lang, args):
     if lang == 'hi':
         text = text.replace('।', '.') # only for hindi models
     
-    if args.number_conversion:
+    if args.number_conversion and lang!='en':
         print("Doing number conversion")
         text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
     else:
         text_num_to_word = text
 
-    if lang == 'en':
-        text_num_to_word = text_num_to_word.lower()
 
     if args.transliteration and lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
         print("Doing transliteration")
