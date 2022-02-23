@@ -49,14 +49,14 @@ def run_tts(text, lang, args):
     if lang == 'hi':
         text = text.replace('।', '.') # only for hindi models
     
-    if args.number_conversion and lang!='en':
+    if args.number_conversion == 1 and lang!='en':
         print("Doing number conversion")
         text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
     else:
         text_num_to_word = text
 
 
-    if args.transliteration and lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
+    if args.transliteration == 1 and lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
         print("Doing transliteration")
         text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
     else:
@@ -70,7 +70,7 @@ def run_tts(text, lang, args):
 
 def run_tts_paragraph(args):
     audio_list = []
-    if args.split_sentences:
+    if args.split_sentences == 1:
         text = normalize_text(args.text, args.lang)
         split_sentences_list = split_sentences(text, args.lang)
 
@@ -87,9 +87,27 @@ def run_tts_paragraph(args):
         return (sr, audio)
 
 
+def load_all_models(args):
+    global engine
+    if args.lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
+        engine = XlitEngine(args.lang) # loading translit model globally
+
+    global text_to_mel
+    global mel_to_wav
+
+    text_to_mel, mel_to_wav = load_models(args.acoustic, args.vocoder, args.device)
+
+    try:
+        args.noise_scale = float(args.noise_scale)
+        args.length_scale = float(args.length_scale)
+    except:
+        pass
+
+    print(args)
+
+
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--acoustic", required=True, type=str)
     parser.add_argument("-v", "--vocoder", required=True, type=str)
@@ -106,19 +124,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    global engine
-    if args.lang not in _TRANSLITERATION_NOT_AVAILABLE_IN:
-        engine = XlitEngine(args.lang) # loading translit model globally
-
-    global text_to_mel
-    global mel_to_wav
-
-    text_to_mel, mel_to_wav = load_models(args.acoustic, args.vocoder, args.device)
-
-    args.noise_scale = float(args.noise_scale)
-    args.length_scale = float(args.length_scale)
-
-    print(args)
+    load_all_models(args)
     run_tts_paragraph(args)
 
     

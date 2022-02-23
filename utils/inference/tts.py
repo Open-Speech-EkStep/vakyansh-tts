@@ -146,15 +146,12 @@ def restricted_float(x):
 
 
 if __name__ == "__main__":
-
     parser = ArgumentParser()
     parser.add_argument("-a", "--acoustic", required=True, type=str)
     parser.add_argument("-v", "--vocoder", required=True, type=str)
     parser.add_argument("-d", "--device", type=str, default="cpu")
     parser.add_argument("-t", "--text", type=str, required=True)
     parser.add_argument("-w", "--wav", type=str, required=True)
-    # parser.add_argument("-T", "--transliteration", type=str, required=True)
-    # parser.add_argument("-N", "--number-conversion", type=str, required=True)
     parser.add_argument("-n", "--noise-scale", default=0.667, type=restricted_float )
     parser.add_argument("-l", "--length-scale", default=1.0, type=float)
 
