@@ -79,7 +79,8 @@ def run_tts_paragraph(args):
             audio_list.append(audio)
 
         concatenated_audio = np.concatenate([i for i in audio_list])
-        write(filename=args.wav, rate=sr, data=concatenated_audio)
+        if args.wav:
+            write(filename=args.wav, rate=sr, data=concatenated_audio)
         return (sr, concatenated_audio)
     else:
         sr, audio = run_tts(args.text, args.lang, args)
