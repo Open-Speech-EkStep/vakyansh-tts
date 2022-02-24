@@ -84,7 +84,8 @@ def run_tts_paragraph(args):
         return (sr, concatenated_audio)
     else:
         sr, audio = run_tts(args.text, args.lang, args)
-        write(filename=args.wav, rate=sr, data=audio)
+        if args.wav:
+            write(filename=args.wav, rate=sr, data=audio)
         return (sr, audio)
 
 
