@@ -64,7 +64,7 @@ def run_tts(text, lang, args):
 
     final_text = ' ' + text_num_to_word_and_transliterated
 
-    mel = text_to_mel.generate_mel(final_text)
+    mel = text_to_mel.generate_mel(final_text, args.noise_scale, args.length_scale)
     audio, sr = mel_to_wav.generate_wav(mel)
     return sr, audio
 
