@@ -16,6 +16,7 @@ def hit_tts(textbox, slider_noise_scale, slider_length_sclae, choice_translitera
 
     args = Namespace(**inputs_to_gradio)
     args.wav = None
+    args.lang = lang
 
     if args.text:
         sr, audio = run_tts_paragraph(args)
@@ -29,7 +30,10 @@ if __name__ == "__main__":
     parser.add_argument("-d", "--device", type=str, default="cpu")
     parser.add_argument("-L", "--lang", type=str, required=True)
 
+    global lang
+
     args = parser.parse_args()    
+    lang = args.lang
     load_all_models(args)
     
     textbox = gr.inputs.Textbox(placeholder="Enter Text to run", default="", label="TTS")
