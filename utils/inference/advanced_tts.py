@@ -26,7 +26,7 @@ def split_sentences(paragraph, language):
     if language == "en":
         with MosesSentenceSplitter(language) as splitter:
             return splitter([paragraph])
-    elif language in INDIC:
+    elif language in _INDIC:
         return sentence_tokenize.sentence_split(paragraph, lang=language)
 
 
