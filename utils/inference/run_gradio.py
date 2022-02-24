@@ -28,9 +28,9 @@ if __name__ == "__main__":
     slider_noise_scale = gr.inputs.Slider(minimum=0, maximum=1.0, step=0.001, default=0.667, label='Enter Noise Scale')
     slider_length_sclae = gr.inputs.Slider(minimum=0, maximum=2.0, step=0.1, default=1.0, label='Enter Slider Scale')
 
-    choice_transliteration = gradio.inputs.Checkbox(default=True, label="Transliteration")
-    choice_number_conversion = gradio.inputs.Checkbox(default=True, label="Number Conversion")
-    choice_split_sentences = gradio.inputs.Checkbox(default=True, label="Split Sentences")
+    choice_transliteration = gr.inputs.Checkbox(default=True, label="Transliteration")
+    choice_number_conversion = gr.inputs.Checkbox(default=True, label="Number Conversion")
+    choice_split_sentences = gr.inputs.Checkbox(default=True, label="Split Sentences")
 
     inputs_to_gradio = {'text' : textbox,
                         'noise_scale': slider_noise_scale,
