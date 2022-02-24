@@ -5,8 +5,16 @@ import numpy as np
 from advanced_tts import load_all_models, run_tts_paragraph
 
 
-def hit_tts(args):
-    args = Namespace(**args.dict())
+def hit_tts(textbox, slider_noise_scale, slider_length_sclae, choice_transliteration, choice_number_conversion, choice_split_sentences):
+    inputs_to_gradio = {'text' : textbox,
+                        'noise_scale': slider_noise_scale,
+                        'length_scale': slider_length_sclae,
+                        'transliteration' : 1 if choice_transliteration else 0,
+                        'number_conversion' : 1 if choice_number_conversion else 0,
+                        'split_sentences' : 1 if choice_split_sentences else 0
+                        }
+
+    args = Namespace(**inputs_to_gradio)
     args.wav = None
 
     if args.text:
@@ -32,15 +40,10 @@ if __name__ == "__main__":
     choice_number_conversion = gr.inputs.Checkbox(default=True, label="Number Conversion")
     choice_split_sentences = gr.inputs.Checkbox(default=True, label="Split Sentences")
 
-    inputs_to_gradio = {'text' : textbox,
-                        'noise_scale': slider_noise_scale,
-                        'length_scale': slider_length_sclae,
-                        'transliteration' : 1 if choice_transliteration else 0,
-                        'number_conversion' : 1 if choice_number_conversion else 0,
-                        'split_sentences' : 1 if choice_split_sentences else 0
-                        }    
+        
    
     op = gr.outputs.Audio(type="numpy", label=None)
 
+    inputs_to_gradio = [textbox, slider_noise_scale, slider_length_sclae, choice_transliteration, choice_number_conversion, choice_split_sentences]
     iface = gr.Interface(fn=hit_tts, inputs=inputs_to_gradio, outputs=op, theme='huggingface', title='Run TTS example')
     iface.launch(share=True, enable_queue=True)
