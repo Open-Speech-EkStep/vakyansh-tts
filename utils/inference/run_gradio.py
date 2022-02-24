@@ -24,7 +24,7 @@ if __name__ == "__main__":
     args = parser.parse_args()    
     load_all_models(args)
     
-    textbox = gr.inputs.Textbox(placeholder=text_to_display, default="", label="TTS")
+    textbox = gr.inputs.Textbox(placeholder="Enter Text to run", default="", label="TTS")
     slider_noise_scale = gr.inputs.Slider(minimum=0, maximum=1.0, step=0.001, default=0.667, label='Enter Noise Scale')
     slider_length_sclae = gr.inputs.Slider(minimum=0, maximum=2.0, step=0.1, default=1.0, label='Enter Slider Scale')
 
@@ -42,5 +42,5 @@ if __name__ == "__main__":
    
     op = gr.outputs.Audio(type="numpy", label=None)
 
-    iface = gr.Interface(fn=hit_tts, inputs=inputs_to_gradio, outputs=op, theme='huggingface')
-    iface.launch(share=True)
+    iface = gr.Interface(fn=hit_tts, inputs=inputs_to_gradio, outputs=op, theme='huggingface', title='Run TTS example')
+    iface.launch(share=True, enable_queue=True)
