@@ -1,7 +1,7 @@
 import gradio as gr
 import argparse
 import numpy as np
-
+from argparse import Namespace
 from advanced_tts import load_all_models, run_tts_paragraph
 
 
