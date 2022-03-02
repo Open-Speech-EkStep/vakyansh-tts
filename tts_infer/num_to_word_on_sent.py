@@ -1186,6 +1186,10 @@ def num_to_word(num, lang, separator=", ", combiner=" "):
 
     # Remove punctuations from numbers
     num = str(num).replace(",", "").replace(" ", "")
+    
+    # return word as it is if not number
+    if not num.isdecimal():
+        return num
 
     # Replace native language numbers with english digits
     for language in supported_lang:
@@ -1291,6 +1295,7 @@ def normalize_nums(text, lang):
     """
 
     if lang in supported_lang:
+        text = text.replace('-',' - ') # space separate hyphen
         words = text.split()
         lang_digits = [str(i) for i in range(0, 10)]
 

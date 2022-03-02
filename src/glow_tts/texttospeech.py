@@ -77,8 +77,9 @@ class TextToMel:
                 noise_scale=noise_scale,
                 length_scale=length_scale,
             )
-
-        return y_gen_tst.cpu().detach().numpy()
+        
+        return y_gen_tst
+        #return y_gen_tst.cpu().detach().numpy()
 
 
 class MelToWav:
@@ -112,9 +113,9 @@ class MelToWav:
         return h, generator
 
     def generate_wav(self, mel):
-        mel = torch.FloatTensor(mel).to(self.device)
+        #mel = torch.FloatTensor(mel).to(self.device)
 
-        y_g_hat = self.hifi_gan_generator(mel)  # passing through vocoder
+        y_g_hat = self.hifi_gan_generator(mel.to(self.device))  # passing through vocoder
         audio = y_g_hat.squeeze()
         audio = audio * 32768.0
         audio = audio.cpu().detach().numpy().astype("int16")
