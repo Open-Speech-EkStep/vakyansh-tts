@@ -49,6 +49,9 @@ def run_tts(text, lang, args):
     if lang == 'hi':
         text = text.replace('।', '.') # only for hindi models
     
+    if lang == 'en' and text[-1] != '.':
+            text = text + '. '
+    
     if args.number_conversion == 1 and lang!='en':
         print("Doing number conversion")
         text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
