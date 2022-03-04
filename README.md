@@ -1,7 +1,7 @@
 # vakyansh-tts
 Text to Speech for Indic languages
 
-### 1. Installation and Setup for training
+## 1. Installation and Setup for training
 
 Clone repo
 Note : for multspeaker glow-tts training use branch [multispeaker](https://github.com/Open-Speech-EkStep/vakyansh-tts/tree/multispeaker)
@@ -32,7 +32,135 @@ Note : used only for glow-tts
 ```
 bash install.sh
 ```
-### 1.1 Installation of tts_infer package
+
+## 2. Data Resampling
+
+Raw data should be placed in the vakyansh_tts/data/
+
+The data format should have a folder containing all the .wav files for glow-tts and a text file containing filenames with their sentences.
+
+Directory structure: 
+
+langauge_folder_name
+```
+vakyansh_tts/data/
+|-- language_folder_name
+|   |-- ./wav/*.wav
+|   |-- ./text_file_name.txt
+```
+The format for text_file_name.txt (Text file is only needed for glow-tts training)
+
+```
+( audio1.wav "Sentence1." )
+( audio2.wav "Sentence2." )
+```
+
+To resample the .wav files to 22050 sample rate, change the following parameters in the vakyansh-tts/scripts/data/resample.sh
+
+```
+input_wav_path : absolute path to wav file folder in vakyansh_tts/data/
+output_wav_path : absolute path to vakyansh_tts/data/resampled_wav_folder_name
+output_sample_rate : 22050 (or any other desired sample rate)
+```
+
+To run:  
+```bash
+cd ./scripts/data/
+bash resample.sh
+```
+
+
+## 3. Spectogram Training (glow-tts)
+
+### 3.1 Data Preparation
+
+
+To prepare the data edit the vakyansh-tts/scripts/glow/prepare_data.sh file and change the following parameters
+```
+input_text_path : absolute path to vakyansh_tts/data/text_file_name.txt
+input_wav_path : absolute path to vakyansh_tts/data/resampled_wav_folder_name
+gender : female or male voice
+```
+To run:  
+```bash
+cd ./scripts/glow/
+bash prepare_data.sh
+```
+### 3.2 Training glow-tts
+
+To start the spectogram-training edit the vakyansh-tts/scripts/glow/train_glow.sh file and change the following parameter:
+```
+gender : female or male voice
+```
+Make sure that the gender is same as that of the prepare_data.sh file
+
+To start the training, run:  
+```bash
+cd ./scripts/glow/
+bash train_glow.sh
+```
+## 4. Vocoder Training (hifi-gan)
+
+### 4.1 Data Preparation
+
+To prepare the data edit the vakyansh-tts/scripts/hifi/prepare_data.sh file and change the following parameters
+```
+input_wav_path : absolute path to vakyansh_tts/data/resampled_wav_folder_name
+gender : female or male voice
+```
+To run:  
+```bash
+cd ./scripts/hifi/
+bash prepare_data.sh
+```
+### 4.2 Training hifi-gan
+
+To start the spectogram-training edit the vakyansh-tts/scripts/hifi/train_hifi.sh file and change the following parameter:
+```
+gender : female or male voice
+```
+Make sure that the gender is same as that of the prepare_data.sh file
+
+To start the training, run:  
+```bash
+cd ./scripts/hifi/
+bash train_hifi.sh
+```
+
+## 5. Inference
+
+### 5.1 Using Gradio 
+
+To use the gradio link edit the following parameters in the vakyansh-tts/scripts/inference/gradio.sh file:
+```
+gender : female or male voice
+device : cpu or cuda
+lang : langauge code
+```
+
+To run:  
+```bash
+cd ./scripts/inference/
+bash gradio.sh
+```
+### 5.2 Using fast API 
+To use the fast api link edit the parameters in the vakyansh-tts/scripts/inference/api.sh file similar to section 5.1
+
+To run:  
+```bash
+cd ./scripts/inference/
+bash api.sh
+```
+
+### 5.3 Direct Inference using text  
+To infer, edit the parameters in the vakyansh-tts/scripts/inference/infer.sh file similar to section 5.1 and set the text to the text variable
+
+To run:  
+```bash
+cd ./scripts/inference/
+bash infer.sh
+```
+### 5.4 Installation of tts_infer package
 
 In tts_infer package, we currently have two components:
     
@@ -77,44 +205,4 @@ def run_tts(text, lang):
     audio, sr = mel_to_wav.generate_wav(mel)
     write(filename='temp.wav', rate=sr, data=audio) # for saving wav file, if needed
     return (sr, audio)
-```
-
-
-### 2. Spectogram Training (glow-tts)
-
-filelists for glow-tts
-
-train.txt
-> abs-filepath|transcript
-
-in case of multispeaker:
-> abs-filepath|numerical_speaker_id|transcript
-
-Note - speaker id should be zero indexed
-
-```
-cd ./scripts
-bash train_glow.sh
-```
-### 3. Genrate Mels
-
-```
-cd ./scripts
-bash generate_mels.sh
-```
-### 4. Vocoder Training (hifi-gan)
-filelists for hifi-gan
-
-train.txt
-> absolute_filepath_1
-
-
-```
-cd ./scripts
-bash train_hifi.sh
-```
-### 5. Inference
-```
-cd ./scripts
-bash infer.sh
 ```
