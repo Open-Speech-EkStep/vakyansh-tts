@@ -35,18 +35,15 @@ bash install.sh
 
 ## 2. Data Resampling
 
-Raw data should be placed in the vakyansh_tts/data/
-
 The data format should have a folder containing all the .wav files for glow-tts and a text file containing filenames with their sentences.
 
 Directory structure: 
 
 langauge_folder_name
 ```
-vakyansh_tts/data/
-|-- language_folder_name
-|   |-- ./wav/*.wav
-|   |-- ./text_file_name.txt
+language_folder_name
+|-- ./wav/*.wav
+|-- ./text_file_name.txt
 ```
 The format for text_file_name.txt (Text file is only needed for glow-tts training)
 
@@ -65,7 +62,7 @@ output_sample_rate : 22050 (or any other desired sample rate)
 
 To run:  
 ```bash
-cd ./scripts/data/
+cd scripts/data/
 bash resample.sh
 ```
 
@@ -83,7 +80,7 @@ gender : female or male voice
 ```
 To run:  
 ```bash
-cd ./scripts/glow/
+cd scripts/glow/
 bash prepare_data.sh
 ```
 ### 3.2 Training glow-tts
@@ -96,7 +93,7 @@ Make sure that the gender is same as that of the prepare_data.sh file
 
 To start the training, run:  
 ```bash
-cd ./scripts/glow/
+cd scripts/glow/
 bash train_glow.sh
 ```
 ## 4. Vocoder Training (hifi-gan)
@@ -110,7 +107,7 @@ gender : female or male voice
 ```
 To run:  
 ```bash
-cd ./scripts/hifi/
+cd scripts/hifi/
 bash prepare_data.sh
 ```
 ### 4.2 Training hifi-gan
@@ -123,7 +120,7 @@ Make sure that the gender is same as that of the prepare_data.sh file
 
 To start the training, run:  
 ```bash
-cd ./scripts/hifi/
+cd scripts/hifi/
 bash train_hifi.sh
 ```
 
@@ -140,7 +137,7 @@ lang : langauge code
 
 To run:  
 ```bash
-cd ./scripts/inference/
+cd scripts/inference/
 bash gradio.sh
 ```
 ### 5.2 Using fast API 
@@ -148,7 +145,7 @@ To use the fast api link edit the parameters in the vakyansh-tts/scripts/inferen
 
 To run:  
 ```bash
-cd ./scripts/inference/
+cd scripts/inference/
 bash api.sh
 ```
 
@@ -157,9 +154,24 @@ To infer, edit the parameters in the vakyansh-tts/scripts/inference/infer.sh fil
 
 To run:  
 ```bash
-cd ./scripts/inference/
+cd scripts/inference/
 bash infer.sh
 ```
+
+To configure other parameters there is a version that runs the advanced inference as well. Additional Parameters:
+```
+noise_scale : can vary from 0 to 1 for noise factor
+length_scale : can vary from 0 to 2 for changing the speed of the generated audio 
+transliteration : whether to switch on/off transliteration. 1: ON, 0: OFF
+number_conversion : whether to switch on/off number to words conversion. 1: ON, 0: OFF
+split_sentences : whether to switch on/off splitting of sentences. 1: ON, 0: OFF
+```
+To run:
+```
+cd scripts/inference/
+bash advanced_infer.sh
+```
+
 ### 5.4 Installation of tts_infer package
 
 In tts_infer package, we currently have two components:
