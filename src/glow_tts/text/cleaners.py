@@ -41,7 +41,7 @@ def expand_abbreviations(text):
     return text
 
 _abbreviations = [(re.compile('\\b%s\\.' % x[0], re.IGNORECASE), x[1]) for x in [
-  ('mrs', 'misess'),
+  ('mrs', 'missus'),
   ('mr', 'mister'),
   ('dr', 'doctor'),
   ('st', 'saint'),
@@ -59,6 +59,8 @@ _abbreviations = [(re.compile('\\b%s\\.' % x[0], re.IGNORECASE), x[1]) for x in 
   ('ltd', 'limited'),
   ('col', 'colonel'),
   ('ft', 'fort'),
+  ('pvt', 'private'),
+  ('rs', 'Rupees')
 ]]
 
 
