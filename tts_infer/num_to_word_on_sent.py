@@ -122,7 +122,7 @@ num_dict["en"] = {
     "99": "ninety-nine",
     "100": "hundred",
     "1000": "thousand",
-    "100000": "lakh",
+    "100000": "lac",
     "10000000": "crore",
     "1000000000": "arab",
 }  # English-India
