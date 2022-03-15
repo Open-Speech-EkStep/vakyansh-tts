@@ -10,7 +10,7 @@ import enum
 import traceback
 import re
 
-F_DIR = os.path.dirname(os.path.realpath(__file__))
+F_DIR = os.path.dirname(os.environ.get('translit_model_base_path', os.path.realpath(__file__)))
 
 
 class XlitError(enum.Enum):
