@@ -186,7 +186,7 @@ bash install.sh
 python setup.py bdist_wheel
 pip install -e .
 cd tts_infer
-gsutil -m cp -r gs://vakyaansh-open-models/translit_models .
+wget https://storage.googleapis.com/vakyansh-open-models/translit_models.zip && unzip -q translit_models.zip
 ```
 
 Usage: Refer to example file in tts_infer/
